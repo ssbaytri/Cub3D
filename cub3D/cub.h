@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 15:48:46 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/09/04 15:57:48 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/09/04 16:14:22 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,6 @@
 # include <string.h>
 # include <sys/time.h>
 # include <unistd.h>
+# include <errno.h>
 
 #endif
