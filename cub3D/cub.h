@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 15:48:46 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/09/04 16:14:22 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/09/04 20:48:12 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,7 @@
 # include <sys/time.h>
 # include <unistd.h>
 # include <errno.h>
+
+void check_args(int ac, char *str);
 
 #endif

@@ -1,7 +1,8 @@
 #include "cub.h"
 
-int	main(void)
+int	main(int argc, char **argv)
 {
-	printf("Getting started!\n");
+	check_args(argc, argv[1]);
+	printf("map file is ok\n");
 	return (0);
 }
