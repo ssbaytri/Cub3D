@@ -6,87 +6,11 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 09:54:36 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/09/05 13:03:40 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/09/05 17:15:20 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub.h"
-
-int ft_ischar(int c)
-{
-	return (c == ' ' || c == '\n' || c == '\0' || c == '\t');
-}
-
-int word_count(char *str)
-{
-	int count = 0;
-	int i = 0;
-	while (str[i])
-	{
-		while (str[i] &&ft_ischar(str[i]))
-			i++;
-		if (!ft_ischar(str[i]))
-			count++;
-		while (!ft_ischar(str[i]))
-			i++;
-	}
-	return count;
-}
-
-
-int ft_strlen2(char *str)
-{
-	int i = 0;
-	while (str[i] && !ft_ischar(str[i]))
-		i++;
-	return i;
-}
-
-char *ft_word(char *str)
-{
-	char *word;
-	int word_len;
-	int i;
-
-	i = 0;
-	word_len = ft_strlen2(str);
-	word = malloc(word_len + 1);
-	if (!word)
-		return NULL;
-	while (i < word_len)
-	{
-		word[i] = str[i];
-		i++;
-	}
-	word[i] = 0;
-	return word;
-}
-
-
-char    **ft_split2(char *str)
-{
-	char **result;
-	int i;
-
-	i = 0;
-	result = malloc(sizeof(char *) * word_count(str) + 1);
-	if (!result)
-		return NULL;
-	while (*str)
-	{
-		while (*str && ft_ischar(*str))
-			str++;
-		if (*str)
-		{
-			result[i] = ft_word(str);
-			i++;
-		}
-		while (*str && !ft_ischar(*str))
-			str++;
-	}
-	result[i] = NULL;
-	return result;
-}
 
 int	check_empty_line(char *line)
 {
@@ -102,137 +26,141 @@ int	check_empty_line(char *line)
 	return (1);
 }
 
-int arr_len(char **arr)
+int count_commas(char *str)
 {
-	int i = 0;
-	
-	if (!arr)
-		return (0);
-	while(arr[i])
-		i++;
-	return (i);
-}
-
-int is_numeric_string(char *str)
-{
+    int count = 0;
     int i = 0;
+    
     while (str[i])
     {
-        if (str[i] < '0' || str[i] > '9')
-            return 0;
+        if (str[i] == ',')
+            count++;
         i++;
     }
-    return 1;
+    return (count);
 }
 
-int validate_and_store_rgb(char **rgb, int *rgb_arr)
+int save_config(t_config *cfg, char *trimmed_line)
 {
-	int i;
-	int value;
-	
-	i = 0;
-	while (rgb[i])
-	{
-		if (is_numeric_string(rgb[i]))
+    char **tmp;
+    char *rgb_string;
+    char **rgb;
+    int result;
+    
+    tmp = ft_split2(trimmed_line);
+    if (!tmp || arr_len(tmp) < 1)
+    {
+        if (tmp)
+            free2d(tmp);
+        return (0);
+    }
+    if (!strcmp(tmp[0], "NO") || !strcmp(tmp[0], "SO") ||
+        !strcmp(tmp[0], "EA") || !strcmp(tmp[0], "WE"))
+    {
+        if (arr_len(tmp) != 2)
+        {
+            free2d(tmp);
+            return (0);
+        }
+        
+        if (!strcmp(tmp[0], "NO"))
+        {
+            if (cfg->taken.got_no)
+            {
+                free2d(tmp);
+                return (0);
+            }
+            cfg->no_path = ft_strdup(tmp[1]);
+            cfg->taken.got_no = 1;
+        }
+        else if (!strcmp(tmp[0], "SO"))
+        {
+            if (cfg->taken.got_so)
+            {
+                free2d(tmp);
+                return (0);
+            }
+            cfg->so_path = ft_strdup(tmp[1]);
+            cfg->taken.got_so = 1;
+        }
+        else if (!strcmp(tmp[0], "WE"))
+        {
+            if (cfg->taken.got_we)
+            {
+                free2d(tmp);
+                return (0);
+            }
+            cfg->we_path = ft_strdup(tmp[1]);
+            cfg->taken.got_we = 1;
+        }
+        else if (!strcmp(tmp[0], "EA"))
+        {
+            if (cfg->taken.got_ea)
+            {
+                free2d(tmp);
+                return (0);
+            }
+            cfg->ea_path = ft_strdup(tmp[1]);
+            cfg->taken.got_ea = 1;
+        }
+        
+        free2d(tmp);
+        return (1);
+    }
+    if (!strcmp(tmp[0], "F") || !strcmp(tmp[0], "C"))
+    {
+        rgb_string = extract_rgb_string(trimmed_line, tmp[0]);
+        if (!rgb_string)
+            return (0);
+		if (count_commas(rgb_string) != 2)
 		{
-			value = ft_atoi(rgb[i]);
-			if (value < 0 || value > 255)
-				return 0;
-			rgb_arr[i] = value;
-			i++;
-		}
-		else
+			free(rgb_string);
 			return (0);
-	}
-	return 1;
-}
-
-void free2d(char **arr)
-{
-	int i;
-	
-	if (!arr)
-		return ;
-	i = 0;
-	while (arr[i])
-	{
-		free(arr[i]);
-		i++;
-	}
-	free(arr);
-}
-
-int save_config(t_config *cfg, char **tmp)
-{
-	if (!strcmp(tmp[0], "NO") || !strcmp(tmp[0], "SO")
-		||! strcmp(tmp[0], "EA") ||!strcmp(tmp[0], "WE"))
-	{
-		if (arr_len(tmp) == 2)
-		{
-			if (!strcmp(tmp[0], "NO"))
-			{
-				cfg->no_path = ft_strdup(tmp[1]);
-				cfg->taken.got_no = 1;
-			}
-			else if(!strcmp(tmp[0], "SO"))
-			{
-				cfg->so_path = ft_strdup(tmp[1]);
-				cfg->taken.got_so = 1;
-			}
-			else if(!strcmp(tmp[0], "WE"))
-			{
-				cfg->we_path = ft_strdup(tmp[1]);
-				cfg->taken.got_we = 1;
-			}
-			else if(!strcmp(tmp[0], "EA"))
-			{
-				cfg->ea_path = ft_strdup(tmp[1]);
-				cfg->taken.got_ea = 1;
-			}
-			return (1);
 		}
-		return (0);
-	}
-	if (!strcmp(tmp[0], "F") || !strcmp(tmp[0], "C"))
-	{
-		if (arr_len(tmp) == 2)
-		{
-			if (!strcmp(tmp[0], "F"))
-			{
-				char **rgb = ft_split(tmp[1], ',');
-				if (arr_len(rgb) == 3 && validate_and_store_rgb(rgb, cfg->floor_rgb))
-				{
-					cfg->taken.got_f = 1;
-					free2d(rgb);
-					return (1);
-				}
-				return (0);
+        rgb = ft_split(rgb_string, ',');
+        free(rgb_string);
+        if (!rgb)
+            return (0);
+        if (!strcmp(tmp[0], "F"))
+        {
+            if (cfg->taken.got_f)
+            {
+                free2d(rgb);
+                return (0);
 			}
-			else if(!strcmp(tmp[0], "C"))
-			{
-				char **rgb = ft_split(tmp[1], ',');
-				if (arr_len(rgb) == 3 && validate_and_store_rgb(rgb, cfg->ceil_rgb))
-				{
-					cfg->taken.got_c = 1;
-					free2d(rgb);
-					return (1);
-				}
-				return (0);
-			}
-		}
-		return (0);
-	}
-	return (0);
+            result = validate_and_store_rgb(rgb, cfg->floor_rgb);
+            if (result)
+                cfg->taken.got_f = 1;
+        }
+        else
+        {
+            if (cfg->taken.got_c)
+            {
+                free2d(rgb);
+                return (0);
+            }
+            
+            result = validate_and_store_rgb(rgb, cfg->ceil_rgb);
+            if (result)
+                cfg->taken.got_c = 1;
+        }
+        free2d(rgb);
+        return (result);
+    }
+    free2d(tmp);
+    return (0);
 }
 
 void	parse_config(char *file, t_config *cfg)
 {
 	int fd;
 	char *line;
-	char **tmp;
+	char *trimmed_line;
 
 	ft_memset(cfg, 0, sizeof(t_config));
 	fd = open(file, O_RDONLY);
+	if (fd < 0)
+		return (ft_putstr_fd("Error: Cannot open file!\n", 2));
 	while (1)
 	{
 		line = get_next_line(fd);
@@ -243,14 +171,21 @@ void	parse_config(char *file, t_config *cfg)
 			free(line);
 			continue ;
 		}
-		tmp = ft_split2(line);
-		save_config(cfg, tmp);
-		free2d(tmp);
+		trimmed_line = ft_strtrim(line, " \t\n\r");
+		free(line);
+		if (!save_config(cfg, trimmed_line))
+		{
+			free(trimmed_line);
+			close(fd);
+			return (ft_putstr_fd("Error: Invalid configurations!\n", 2));
+		}
+		free(trimmed_line);
 	}
-	printf("%s\n", cfg->no_path);
-	printf("%s\n", cfg->so_path);
-	printf("%s\n", cfg->we_path);
-	printf("%s\n", cfg->ea_path);
-	printf("[%d, %d, %d]\n", cfg->floor_rgb[0], cfg->floor_rgb[1], cfg->floor_rgb[2]);
-	printf("[%d, %d, %d]\n", cfg->ceil_rgb[0], cfg->ceil_rgb[1], cfg->ceil_rgb[2]);
+	close(fd);
+	printf("NO: %s\n", cfg->no_path);
+    printf("SO: %s\n", cfg->so_path);
+    printf("WE: %s\n", cfg->we_path);
+    printf("EA: %s\n", cfg->ea_path);
+    printf("F: [%d, %d, %d]\n", cfg->floor_rgb[0], cfg->floor_rgb[1], cfg->floor_rgb[2]);
+    printf("C: [%d, %d, %d]\n", cfg->ceil_rgb[0], cfg->ceil_rgb[1], cfg->ceil_rgb[2]);
 }

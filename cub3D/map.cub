@@ -1,14 +1,7 @@
-NO     ./north_texture.png
+NO ./northh_texture
+SO ./south_texture
+WE ./west_texture  
+EA ./east_texture
 
-
-
-          SO    ./south_texture.png     	
-
-
-F  123,232,32
-
-EA	./east_texture.png
-
-C   221,98,12
-
-WE    ./west_texture.png
+F 220,100,0
+C 225,30,0

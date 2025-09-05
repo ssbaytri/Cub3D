@@ -1,5 +1,5 @@
 CC = cc  
-flags = -Wall -Wextra -Werror -O3  #-fsanitize=address -g
+flags = -Wall -Wextra -Werror -O3  -fsanitize=address -g
 lib = mlx/build/libglfw3.a mlx/build/libmlx42.a -framework Cocoa -framework OpenGL -framework IOKit
 NAME = cub3D
 src = $(shell find . -name "*.c")
