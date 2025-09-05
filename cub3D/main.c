@@ -1,11 +1,26 @@
 #include "cub.h"
 
+void ss()
+{
+	system("leaks cub3D");
+}
+
+void free_cfg(t_config *cfg)
+{
+	free(cfg->no_path);
+	free(cfg->so_path);
+	free(cfg->we_path);
+	free(cfg->ea_path);
+}
+
 int	main(int argc, char **argv)
 {
+	atexit(ss);
 	t_config cfg;
 
 	check_args(argc, argv[1]);
-	printf("map file is ok\n");
-	parse_config(argv[1], &cfg);
+	if (!parse_config(argv[1], &cfg))
+		return (free_cfg(&cfg), 1);
+	free_cfg(&cfg);
 	return (0);
 }

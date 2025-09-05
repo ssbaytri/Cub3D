@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 15:48:46 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/09/05 16:01:56 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/09/05 17:26:13 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ typedef struct s_config
 }				t_config;
 
 void			check_args(int ac, char *str);
-void			parse_config(char *file, t_config *cfg);
+int				parse_config(char *file, t_config *cfg);
 char			**ft_split2(char *str);
 int				arr_len(char **arr);
 void			free2d(char **arr);

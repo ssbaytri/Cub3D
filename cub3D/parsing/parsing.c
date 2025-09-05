@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 09:54:36 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/09/05 17:15:20 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/09/05 17:57:13 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ int save_config(t_config *cfg, char *trimmed_line)
             return (0);
 		if (count_commas(rgb_string) != 2)
 		{
+			free2d(tmp);
 			free(rgb_string);
 			return (0);
 		}
@@ -125,6 +126,7 @@ int save_config(t_config *cfg, char *trimmed_line)
         {
             if (cfg->taken.got_f)
             {
+				free2d(tmp);
                 free2d(rgb);
                 return (0);
 			}
@@ -136,6 +138,7 @@ int save_config(t_config *cfg, char *trimmed_line)
         {
             if (cfg->taken.got_c)
             {
+				free2d(tmp);
                 free2d(rgb);
                 return (0);
             }
@@ -145,13 +148,14 @@ int save_config(t_config *cfg, char *trimmed_line)
                 cfg->taken.got_c = 1;
         }
         free2d(rgb);
+		free2d(tmp);
         return (result);
     }
     free2d(tmp);
     return (0);
 }
 
-void	parse_config(char *file, t_config *cfg)
+int	parse_config(char *file, t_config *cfg)
 {
 	int fd;
 	char *line;
@@ -160,7 +164,7 @@ void	parse_config(char *file, t_config *cfg)
 	ft_memset(cfg, 0, sizeof(t_config));
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
-		return (ft_putstr_fd("Error: Cannot open file!\n", 2));
+		return (ft_putstr_fd("Error: Cannot open file!\n", 2), 0);
 	while (1)
 	{
 		line = get_next_line(fd);
@@ -177,15 +181,21 @@ void	parse_config(char *file, t_config *cfg)
 		{
 			free(trimmed_line);
 			close(fd);
-			return (ft_putstr_fd("Error: Invalid configurations!\n", 2));
+			return (ft_putstr_fd("Error: Invalid configurations!\n", 2), 0);
 		}
 		free(trimmed_line);
 	}
 	close(fd);
+	
+	if (!cfg->taken.got_no || !cfg->taken.got_so || !cfg->taken.got_we || 
+        !cfg->taken.got_ea || !cfg->taken.got_f || !cfg->taken.got_c)
+		return (ft_putstr_fd("Error: Missing required configs\n", 2), 0);
+	
 	printf("NO: %s\n", cfg->no_path);
     printf("SO: %s\n", cfg->so_path);
     printf("WE: %s\n", cfg->we_path);
     printf("EA: %s\n", cfg->ea_path);
     printf("F: [%d, %d, %d]\n", cfg->floor_rgb[0], cfg->floor_rgb[1], cfg->floor_rgb[2]);
     printf("C: [%d, %d, %d]\n", cfg->ceil_rgb[0], cfg->ceil_rgb[1], cfg->ceil_rgb[2]);
+	return (1);
 }

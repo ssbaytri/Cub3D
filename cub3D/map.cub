@@ -1,7 +1,14 @@
 NO ./northh_texture
 SO ./south_texture
-WE ./west_texture  
-EA ./east_texture
 
-F 220,100,0
-C 225,30,0
+F        233   ,  177    ,    3    
+
+
+
+EA              ./east_texture    
+
+C           225,   30,   0
+
+
+
+                WE      ./idk_about_this
