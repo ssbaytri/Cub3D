@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 15:48:46 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/09/05 17:26:13 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/09/05 18:35:30 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,10 @@ int				arr_len(char **arr);
 void			free2d(char **arr);
 char			*extract_rgb_string(char *line, char *identifier);
 int				validate_and_store_rgb(char **rgb, int *rgb_arr);
+int				handle_texture_config(t_config *cfg, char **tmp);
+int				handle_color_config(t_config *cfg, char **tmp,
+					char *trimmed_line);
+int				check_empty_line(char *line);
+int				count_commas(char *str);
 
 #endif

@@ -1,14 +1,19 @@
-NO ./northh_texture
-SO ./south_texture
 
-F        233   ,  177    ,    3    
+
+F        233 , 100, 0
 
 
 
 EA              ./east_texture    
 
-C           225,   30,   0
+C     112,   123, 123
 
 
 
-                WE      ./idk_about_this
+WE       
+
+                       NO     ./maybe_done_configs
+
+
+            SO          ./south_texture     
+

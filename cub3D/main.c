@@ -1,11 +1,11 @@
 #include "cub.h"
 
-void ss()
+void	ss(void)
 {
 	system("leaks cub3D");
 }
 
-void free_cfg(t_config *cfg)
+void	free_cfg(t_config *cfg)
 {
 	free(cfg->no_path);
 	free(cfg->so_path);
