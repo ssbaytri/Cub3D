@@ -6,13 +6,13 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 09:54:36 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/09/06 12:49:18 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/09/06 15:37:31 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub.h"
 
-int all_cfg_done(t_config *cfg)
+int	all_cfg_done(t_config *cfg)
 {
 	return (cfg->taken.got_no && cfg->taken.got_so && cfg->taken.got_we
 		&& cfg->taken.got_ea && cfg->taken.got_f && cfg->taken.got_c);
@@ -50,15 +50,6 @@ void	debug(t_config *cfg)
 		cfg->ceil_rgb[2]);
 }
 
-void print_map(t_map_list *head)
-{
-	while (head)
-	{
-		printf("[%s]\n", head->line);
-		head = head->next;
-	}
-}
-
 int	parse_config(int fd, t_config *cfg)
 {
 	char	*line;
@@ -68,11 +59,11 @@ int	parse_config(int fd, t_config *cfg)
 	{
 		line = get_next_line(fd);
 		if (!line)
-			break;
+			break ;
 		if (check_empty_line(line))
 		{
 			free(line);
-			continue;
+			continue ;
 		}
 		trimmed_line = ft_strtrim(line, " \t\n\r");
 		free(line);
@@ -100,13 +91,13 @@ int	parse_map(int fd, t_map_list **map_lines)
 	{
 		line = get_next_line(fd);
 		if (!line)
-			break;
+			break ;
 		if (check_empty_line(line))
 		{
 			if (map_started)
 				return (free(line), 0);
 			free(line);
-			continue;
+			continue ;
 		}
 		trimmed_line = ft_strtrim(line, "'\n");
 		free(line);
@@ -114,7 +105,7 @@ int	parse_map(int fd, t_map_list **map_lines)
 			return (free(trimmed_line), 0);
 		curr = create_map_node(trimmed_line);
 		if (!curr)
-			return (free(trimmed_line), 0);
+			return (free(trimmed_line), free_map_list(curr), 0);
 		add_map_line(map_lines, curr);
 		map_started = 1;
 		free(trimmed_line);
@@ -124,29 +115,26 @@ int	parse_map(int fd, t_map_list **map_lines)
 
 int	parse_file(char *file, t_config *cfg)
 {
-	int			fd;
-	t_map_list	*map_lines;
+	int		fd;
+	t_map	map;
 
 	ft_memset(cfg, 0, sizeof(t_config));
+	ft_memset(&map, 0, sizeof(t_map));
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
 		return (ft_putstr_fd("Error: Cannot open file!\n", 2), 0);
 	if (!parse_config(fd, cfg))
 	{
 		close(fd);
-		return (ft_putstr_fd("Error: Invalid configurations or missing required configs!\n", 2), 0);
+		return (ft_putstr_fd("Error: Something wrong with configs!\n", 2), 0);
 	}
 	debug(cfg);
-	map_lines = NULL;
-	if (!parse_map(fd, &map_lines))
+	if (!parse_map(fd, &map.list) || !validate_map(&map))
 	{
 		close(fd);
-		free_map_list(map_lines);
-		return (ft_putstr_fd("Error: Invalid map!\n", 2), 0);
+		free_map_list(map.list);
+		return (ft_putstr_fd("Error: Invalid map!\n", 2), close(fd), 0);
 	}
 	close(fd);
-	print_map(map_lines);
-	free_map_list(map_lines);
 	return (1);
 }
-

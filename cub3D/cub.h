@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 15:48:46 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/09/06 12:44:51 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/09/06 15:15:33 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,14 @@ typedef struct s_marked
 	int					got_c;
 }						t_marked;
 
+typedef struct s_dir
+{
+	int					n;
+	int					s;
+	int					w;
+	int					e;
+}						t_dir;
+
 typedef struct s_point
 {
 	int					x;
@@ -49,11 +57,13 @@ typedef struct s_map_list
 
 typedef struct s_map
 {
+	t_map_list			*list;
 	char				**grid;
 	int					height;
 	int					width;
 	t_point				player_pos;
 	char				player_dir;
+	t_dir				dir_count;
 }						t_map;
 
 typedef struct s_config
@@ -83,5 +93,10 @@ int						is_map_line_valid(char *line);
 t_map_list				*create_map_node(char *line);
 void					free_map_list(t_map_list *list);
 void					add_map_line(t_map_list **list, t_map_list *new_node);
+int						map_height(t_map_list *head);
+int						map_max_width(t_map_list *list);
+char					**list_to_2d(t_map_list *head, int *final_height,
+							int *final_width);
+int						validate_map(t_map *map);
 
 #endif
