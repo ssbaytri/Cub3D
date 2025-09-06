@@ -6,23 +6,11 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 14:55:25 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/09/06 15:50:57 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/09/06 18:22:50 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub.h"
-
-void	print_map(char **map)
-{
-	int	i;
-
-	i = 0;
-	while (map[i])
-	{
-		printf("[%s]\n", map[i]);
-		i++;
-	}
-}
 
 int	is_map_line_valid(char *line)
 {
@@ -81,8 +69,8 @@ int	extract_player_info(t_map *map)
 		j = 0;
 		while (j < map->width)
 		{
-			if (map->grid[i][j] == 'N' || map->grid[i][j] == 'S' ||
-				map->grid[i][j] == 'W' || map->grid[i][j] == 'E')
+			if (map->grid[i][j] == 'N' || map->grid[i][j] == 'S'
+				|| map->grid[i][j] == 'W' || map->grid[i][j] == 'E')
 			{
 				map->player_pos.y = i;
 				map->player_pos.x = j;
@@ -105,8 +93,8 @@ int	validate_map(t_map *map)
 		return (free2d(map->grid), 0);
 	if (!extract_player_info(map))
 		return (free2d(map->grid), 0);
-	print_map(map->grid);
-	printf("The Player is at: [%d, %d], with direction of: %c\n", map->player_pos.y, map->player_pos.x, map->player_dir);
+	if (!validate_closed_map(map))
+		return (free2d(map->grid), 0);
 	free2d(map->grid);
 	free_map_list(map->list);
 	return (1);

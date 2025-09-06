@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 09:54:36 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/09/06 15:37:31 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/09/06 18:23:42 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,18 +36,6 @@ int	save_config(t_config *cfg, char *trimmed_line)
 		return (handle_color_config(cfg, tmp, trimmed_line));
 	free2d(tmp);
 	return (0);
-}
-
-void	debug(t_config *cfg)
-{
-	printf("NO: %s\n", cfg->no_path);
-	printf("SO: %s\n", cfg->so_path);
-	printf("WE: %s\n", cfg->we_path);
-	printf("EA: %s\n", cfg->ea_path);
-	printf("F: [%d, %d, %d]\n", cfg->floor_rgb[0], cfg->floor_rgb[1],
-		cfg->floor_rgb[2]);
-	printf("C: [%d, %d, %d]\n", cfg->ceil_rgb[0], cfg->ceil_rgb[1],
-		cfg->ceil_rgb[2]);
 }
 
 int	parse_config(int fd, t_config *cfg)
@@ -128,7 +116,6 @@ int	parse_file(char *file, t_config *cfg)
 		close(fd);
 		return (ft_putstr_fd("Error: Something wrong with configs!\n", 2), 0);
 	}
-	debug(cfg);
 	if (!parse_map(fd, &map.list) || !validate_map(&map))
 	{
 		close(fd);

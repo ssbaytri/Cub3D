@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 15:48:46 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/09/06 15:15:33 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/09/06 17:34:09 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ int						map_height(t_map_list *head);
 int						map_max_width(t_map_list *list);
 char					**list_to_2d(t_map_list *head, int *final_height,
 							int *final_width);
+int						validate_closed_map(t_map *map);
 int						validate_map(t_map *map);
 
 #endif
