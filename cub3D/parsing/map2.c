@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 14:55:25 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/09/06 18:22:50 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/09/06 19:29:52 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ int	validate_map(t_map *map)
 		return (free2d(map->grid), 0);
 	if (!validate_closed_map(map))
 		return (free2d(map->grid), 0);
-	free2d(map->grid);
 	free_map_list(map->list);
 	return (1);
 }

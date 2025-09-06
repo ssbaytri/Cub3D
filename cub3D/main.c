@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/06 20:26:03 by ssbaytri          #+#    #+#             */
+/*   Updated: 2025/09/06 20:26:56 by ssbaytri         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub.h"
 
 void	ss(void)
@@ -15,12 +27,19 @@ void	free_cfg(t_config *cfg)
 
 int	main(int argc, char **argv)
 {
-	atexit(ss);
-	t_config cfg;
+	t_game	cub;
 
+	atexit(ss);
+	ft_memset(&cub, 0, sizeof(t_game));
 	check_args(argc, argv[1]);
-	if (!parse_file(argv[1], &cfg))
-		return (free_cfg(&cfg), 1);
-	free_cfg(&cfg);
+	if (!parse_file(argv[1], &cub))
+	{
+		free_cfg(&cub.cfg);
+		free2d(cub.map.grid);
+		return (1);
+	}
+	printf("Valida Map\n");
+	free2d(cub.map.grid);
+	free_cfg(&cub.cfg);
 	return (0);
 }

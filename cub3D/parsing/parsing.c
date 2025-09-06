@@ -6,73 +6,55 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 09:54:36 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/09/06 18:23:42 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/09/06 20:22:37 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub.h"
 
-int	all_cfg_done(t_config *cfg)
+int	handle_empty_line(char *line, int map_started)
 {
-	return (cfg->taken.got_no && cfg->taken.got_so && cfg->taken.got_we
-		&& cfg->taken.got_ea && cfg->taken.got_f && cfg->taken.got_c);
-}
-
-int	save_config(t_config *cfg, char *trimmed_line)
-{
-	char	**tmp;
-
-	tmp = ft_split2(trimmed_line);
-	if (!tmp || arr_len(tmp) < 1)
+	if (check_empty_line(line))
 	{
-		if (tmp)
-			free2d(tmp);
-		return (0);
+		if (map_started)
+		{
+			free(line);
+			return (-1);
+		}
+		free(line);
+		return (1);
 	}
-	if (!strcmp(tmp[0], "NO") || !strcmp(tmp[0], "SO") || !strcmp(tmp[0], "EA")
-		|| !strcmp(tmp[0], "WE"))
-		return (handle_texture_config(cfg, tmp));
-	if (!strcmp(tmp[0], "F") || !strcmp(tmp[0], "C"))
-		return (handle_color_config(cfg, tmp, trimmed_line));
-	free2d(tmp);
 	return (0);
 }
 
-int	parse_config(int fd, t_config *cfg)
+int	process_map_line(char *line, t_map_list **map_lines)
 {
-	char	*line;
-	char	*trimmed_line;
+	char		*trimmed_line;
+	t_map_list	*curr;
 
-	while (!all_cfg_done(cfg))
+	trimmed_line = ft_strtrim(line, "\n");
+	free(line);
+	if (!is_map_line_valid(trimmed_line))
 	{
-		line = get_next_line(fd);
-		if (!line)
-			break ;
-		if (check_empty_line(line))
-		{
-			free(line);
-			continue ;
-		}
-		trimmed_line = ft_strtrim(line, " \t\n\r");
-		free(line);
-		if (!save_config(cfg, trimmed_line))
-		{
-			free(trimmed_line);
-			return (0);
-		}
 		free(trimmed_line);
-	}
-	if (!all_cfg_done(cfg))
 		return (0);
+	}
+	curr = create_map_node(trimmed_line);
+	if (!curr)
+	{
+		free(trimmed_line);
+		return (0);
+	}
+	add_map_line(map_lines, curr);
+	free(trimmed_line);
 	return (1);
 }
 
 int	parse_map(int fd, t_map_list **map_lines)
 {
-	char		*line;
-	char		*trimmed_line;
-	int			map_started;
-	t_map_list	*curr;
+	char	*line;
+	int		map_started;
+	int		empty_result;
 
 	map_started = 0;
 	while (1)
@@ -80,46 +62,34 @@ int	parse_map(int fd, t_map_list **map_lines)
 		line = get_next_line(fd);
 		if (!line)
 			break ;
-		if (check_empty_line(line))
-		{
-			if (map_started)
-				return (free(line), 0);
-			free(line);
+		empty_result = handle_empty_line(line, map_started);
+		if (empty_result == -1)
+			return (0);
+		if (empty_result == 1)
 			continue ;
-		}
-		trimmed_line = ft_strtrim(line, "'\n");
-		free(line);
-		if (!is_map_line_valid(trimmed_line))
-			return (free(trimmed_line), 0);
-		curr = create_map_node(trimmed_line);
-		if (!curr)
-			return (free(trimmed_line), free_map_list(curr), 0);
-		add_map_line(map_lines, curr);
+		if (!process_map_line(line, map_lines))
+			return (0);
 		map_started = 1;
-		free(trimmed_line);
 	}
 	return (1);
 }
 
-int	parse_file(char *file, t_config *cfg)
+int	parse_file(char *file, t_game *cub)
 {
-	int		fd;
-	t_map	map;
+	int	fd;
 
-	ft_memset(cfg, 0, sizeof(t_config));
-	ft_memset(&map, 0, sizeof(t_map));
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
 		return (ft_putstr_fd("Error: Cannot open file!\n", 2), 0);
-	if (!parse_config(fd, cfg))
+	if (!parse_config(fd, &cub->cfg))
 	{
 		close(fd);
 		return (ft_putstr_fd("Error: Something wrong with configs!\n", 2), 0);
 	}
-	if (!parse_map(fd, &map.list) || !validate_map(&map))
+	if (!parse_map(fd, &cub->map.list) || !validate_map(&cub->map))
 	{
 		close(fd);
-		free_map_list(map.list);
+		free_map_list(cub->map.list);
 		return (ft_putstr_fd("Error: Invalid map!\n", 2), close(fd), 0);
 	}
 	close(fd);

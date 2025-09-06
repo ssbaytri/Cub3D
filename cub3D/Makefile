@@ -36,4 +36,7 @@ fclean: clean
 re: fclean all
 42: all clean ; clear
 
+norm:
+	@norminette $(src) cub.h
+
 .PHONY: all clean fclean
