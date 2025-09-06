@@ -1,19 +1,20 @@
-
-
-F        233 , 100, 0
-
-
-
-EA              ./east_texture    
-
-C     112,   123, 123
+NO ./north_texture
+SO ./south_texture
+WE ./west_texture
+EA ./east_texture
 
 
 
-WE       
 
-                       NO     ./maybe_done_configs
+F    220,100,0
+C    225,30,0
 
 
-            SO          ./south_texture     
 
+1111111111
+1000000001
+1011111101
+101  100001
+1011111001
+1000000N01
+1111111111

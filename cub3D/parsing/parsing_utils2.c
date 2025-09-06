@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 18:23:04 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/09/05 18:55:45 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/09/06 12:00:02 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 int	check_empty_line(char *line)
 {
 	int	i;
-
+	
+	if (!line)
+		return (0);
 	i = 0;
 	while (line[i])
 	{

@@ -19,7 +19,7 @@ int	main(int argc, char **argv)
 	t_config cfg;
 
 	check_args(argc, argv[1]);
-	if (!parse_config(argv[1], &cfg))
+	if (!parse_file(argv[1], &cfg))
 		return (free_cfg(&cfg), 1);
 	free_cfg(&cfg);
 	return (0);
