@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 09:54:36 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/09/06 12:13:20 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/09/06 12:49:18 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,78 +54,95 @@ void print_map(t_map_list *head)
 {
 	while (head)
 	{
-		printf("%s", head->line);
+		printf("[%s]\n", head->line);
 		head = head->next;
 	}
 }
 
-int	parse_file(char *file, t_config *cfg)
+int	parse_config(int fd, t_config *cfg)
 {
-	int		fd;
 	char	*line;
 	char	*trimmed_line;
-	t_map_list *map_lines;
-	int map_started;
 
-	ft_memset(cfg, 0, sizeof(t_config));
-	fd = open(file, O_RDONLY);
-	if (fd < 0)
-		return (ft_putstr_fd("Error: Cannot open file!\n", 2), 0);
 	while (!all_cfg_done(cfg))
 	{
 		line = get_next_line(fd);
 		if (!line)
-			break ;
+			break;
 		if (check_empty_line(line))
 		{
 			free(line);
-			continue ;
+			continue;
 		}
 		trimmed_line = ft_strtrim(line, " \t\n\r");
 		free(line);
 		if (!save_config(cfg, trimmed_line))
 		{
 			free(trimmed_line);
-			close(fd);
-			return (ft_putstr_fd("Error: Invalid configurations!\n", 2), 0);
+			return (0);
 		}
 		free(trimmed_line);
 	}
 	if (!all_cfg_done(cfg))
-		return (ft_putstr_fd("Error: Missing required configs\n", 2), 0);
-	debug(cfg);
+		return (0);
+	return (1);
+}
 
-	map_lines = NULL;
+int	parse_map(int fd, t_map_list **map_lines)
+{
+	char		*line;
+	char		*trimmed_line;
+	int			map_started;
+	t_map_list	*curr;
+
 	map_started = 0;
 	while (1)
 	{
-		t_map_list *curr;
-
-		curr = NULL;
 		line = get_next_line(fd);
 		if (!line)
-			break ;
+			break;
 		if (check_empty_line(line))
 		{
 			if (map_started)
-			{
-				free_map_list(map_lines);
-				return (ft_putstr_fd("Error: Empty line in map!\n", 2), free(line), close(fd) ,0);
-			}
+				return (free(line), 0);
 			free(line);
-			continue ;
+			continue;
 		}
-		if (!is_map_line_valid(line))
-		{
-			free(line);
-            free_map_list(map_lines);
-            close(fd);
-            return (ft_putstr_fd("Error: Invalid map characters!\n", 2), 0);
-		}
-		curr = create_map_node(line);
-		add_map_line(&map_lines, curr);
-		map_started = 1;
+		trimmed_line = ft_strtrim(line, "'\n");
 		free(line);
+		if (!is_map_line_valid(trimmed_line))
+			return (free(trimmed_line), 0);
+		curr = create_map_node(trimmed_line);
+		if (!curr)
+			return (free(trimmed_line), 0);
+		add_map_line(map_lines, curr);
+		map_started = 1;
+		free(trimmed_line);
+	}
+	return (1);
+}
+
+int	parse_file(char *file, t_config *cfg)
+{
+	int			fd;
+	t_map_list	*map_lines;
+
+	ft_memset(cfg, 0, sizeof(t_config));
+	fd = open(file, O_RDONLY);
+	if (fd < 0)
+		return (ft_putstr_fd("Error: Cannot open file!\n", 2), 0);
+	if (!parse_config(fd, cfg))
+	{
+		close(fd);
+		return (ft_putstr_fd("Error: Invalid configurations or missing required configs!\n", 2), 0);
+	}
+	debug(cfg);
+	map_lines = NULL;
+	if (!parse_map(fd, &map_lines))
+	{
+		close(fd);
+		free_map_list(map_lines);
+		return (ft_putstr_fd("Error: Invalid map!\n", 2), 0);
 	}
 	close(fd);
 	print_map(map_lines);

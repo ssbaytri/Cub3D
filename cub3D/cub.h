@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 15:48:46 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/09/06 12:06:38 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/09/06 12:44:51 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ typedef struct s_map_list
 
 typedef struct s_map
 {
-	t_map_list			*head;
 	char				**grid;
 	int					height;
 	int					width;
