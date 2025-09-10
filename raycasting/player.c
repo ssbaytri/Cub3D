@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 13:27:20 by naessgui          #+#    #+#             */
-/*   Updated: 2025/09/09 13:26:10 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/09/10 14:25:18 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,22 +75,4 @@ void draw_player_line(t_data *data)
         i++;
     }
 }
-// void draw_player_line(t_data *data)
-// {
-//     int x = (int)data->player.pos_x;
-//     int y = (int)data->player.pos_y;
-//     int length = 50;
 
-//     for (int step = 0; step < length; step++)
-//     {
-//         int x = x + cos(data->player.rot_angle) * step;
-//         int y = y + sin(data->player.rot_angle) * step;
-
-//         if (x >= 0 && y >= 0 &&
-//             x < (int)data->Mlx.img->width &&
-//             y < (int)data->Mlx.img->height)
-//         {
-//             mlx_put_pixel(data->Mlx.img, x, y, 0xFF00FFFF);
-//         }
-//     }
-// }

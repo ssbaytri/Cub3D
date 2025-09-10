@@ -6,7 +6,7 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 20:26:03 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/09/10 12:06:53 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/09/10 14:27:32 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ void    debug_game(t_game *game)
 
     printf("========== MAP ==========\n");
     printf("Map size: %d x %d\n", game->map.height, game->map.width);
-	// printf("height --> %d width ---> %d \n", game->map.height ,game->map.width );
     printf("Player at: (%d, %d) facing %c\n",
         game->map.player_pos.x,
         game->map.player_pos.y,
@@ -115,7 +114,6 @@ int	main(int argc, char **argv)
 	{
 		free_cfg(&cub.cfg);
 		free2d(cub.map.grid);
-	// exit(0);
 		return (1);
 	}
 	printf("Valida Map\n");
@@ -123,16 +121,12 @@ int	main(int argc, char **argv)
     data = malloc(sizeof(t_data));
 	data->map = cub.map;
 	data->cfg  = cub.cfg;
-	// data->map.grid = malloc(sizeof(char *) * 13);
-	// init_map(data);
 	window_size(data);
-    // printf("width =%d , height = %d\n", data->map.width, data->map.height);
     data->Mlx.mlx = mlx_init(data->Mlx.win_w, data->Mlx.win_h, "My MLX42 Window", false);
     
     if (!data->Mlx.mlx)
         return (EXIT_FAILURE);
     data->Mlx.img = mlx_new_image(data->Mlx.mlx, data->Mlx.win_w, data->Mlx.win_h);
-    // printf("width =%d , height = %d\n", data->Mlx.win_h, data->Mlx.win_h);
 	
 	mlx_image_to_window(data->Mlx.mlx, data->Mlx.img, 0, 0);
 	draw_map(data);
