@@ -94,7 +94,11 @@ int	validate_map(t_map *map)
 	if (!extract_player_info(map))
 		return (free2d(map->grid), 0);
 	if (!validate_closed_map(map))
-		return (free2d(map->grid), 0);
+	{
+		free2d(map->grid);
+		map->grid = NULL;
+		return (0);
+	}
 	free_map_list(map->list);
 	return (1);
 }
