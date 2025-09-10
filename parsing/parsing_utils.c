@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 15:20:30 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/09/05 18:54:36 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/09/10 13:54:01 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,12 @@ void	free2d(char **arr)
 	if (!arr)
 		return ;
 	i = 0;
+	printf("%s",*arr);
 	while (arr[i])
 	{
+		printf("%s\n",arr[i]);
 		free(arr[i]);
+		
 		i++;
 	}
 	free(arr);

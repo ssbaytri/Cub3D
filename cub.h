@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 15:48:46 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/09/06 20:33:10 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/09/09 11:46:32 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,18 @@
 # include <string.h>
 # include <sys/time.h>
 # include <unistd.h>
+
+#define WHITE 0xFFFFFFFF
+#define BLACK 0xFF000000
+#define RED 0xFF0000FF
+#define GRAY 0x808080FF
+#define LIGHT_GRAY 0xD3D3D3FF
+#define tile_size 45
+
+#define MLX_KEY_RIGHT   262
+#define MLX_KEY_LEFT    263
+#define MLX_KEY_DOWN    264
+#define MLX_KEY_UP      265
 
 typedef struct s_marked
 {
@@ -61,6 +73,7 @@ typedef struct s_map
 	char				**grid;
 	int					height;
 	int					width;
+	// int 				tile_size;
 	t_pos				player_pos;
 	char				player_dir;
 	t_dir				dir_count;
@@ -84,6 +97,58 @@ typedef struct s_game
 	t_config			cfg;
 	t_map				map;
 }						t_game;
+typedef struct s_mlx
+{
+    mlx_t *mlx;
+    mlx_image_t *img;
+    int win_w;
+    int win_h;
+}	t_mlx;
+
+// typedef struct s_map
+// {
+//     char **grid;
+//     int n_column;
+//     int n_rows;
+//     int tile_size;
+    
+// }t_map;
+
+typedef struct s_player
+{
+    float pos_x;
+    float pos_y;
+    int  turn_dir;
+    int walk_dir;
+     mlx_image_t *img_p;
+    
+    // float plane_x;
+    // float plane_y;
+    float move_speed;
+    float rot_speed;
+    float rot_angle;
+    int color;
+    int radius;
+}   t_player;
+
+typedef struct s_data
+{
+    t_mlx Mlx;
+    t_map map;
+	t_config cfg;
+    t_player player;
+	t_dir dir;
+}t_data;
+
+void draw_rectangle(mlx_image_t *img, int j, int i, int color);
+void draw_player(mlx_image_t *img, t_data *data);
+void init_map(t_data *data);
+void window_size(t_data *data);
+void init_player(t_data *data);
+void draw_player_line(t_data *data);
+void draw_map(t_data *data);
+
+
 
 /* ************************************************************************** */
 /*                            Argument Checking                               */
