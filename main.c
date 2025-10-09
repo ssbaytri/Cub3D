@@ -6,59 +6,11 @@
 /*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 20:26:03 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/09/10 14:27:32 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/10/09 20:18:38 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
-
-void key_hook(mlx_key_data_t keydata, void *param)
-{
-	t_player *player = (t_player *)param;
-
-	if (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT)
-	{
-		if (keydata.key == MLX_KEY_UP)
-			player->walk_dir = 1;
-		else if (keydata.key == MLX_KEY_DOWN)
-			player->walk_dir = -1;
-		else if (keydata.key == MLX_KEY_RIGHT)
-			player->turn_dir = 1;
-		else if (keydata.key == MLX_KEY_LEFT)
-			player->turn_dir = -1;
-		else if( keydata.key == MLX_KEY_ESCAPE)
-			exit(0);
-	}
-	else if (keydata.action == MLX_RELEASE)
-	{
-		if (keydata.key == MLX_KEY_UP || keydata.key == MLX_KEY_DOWN)
-			player->walk_dir = 0;
-		else if (keydata.key == MLX_KEY_RIGHT || keydata.key == MLX_KEY_LEFT)
-			player->turn_dir = 0;
-	}
-}
-
-void update(void *param)
-{
-    t_data *data = (t_data *)param;
-
-    data->player.rot_angle += data->player.turn_dir * data->player.rot_speed;
-    data->player.pos_x += cos(data->player.rot_angle) * data->player.walk_dir * data->player.move_speed;
-    data->player.pos_y += sin(data->player.rot_angle) * data->player.walk_dir * data->player.move_speed;
-
-    for (int y = 0; y < data->Mlx.win_h; y++)
-    {
-        for (int x = 0; x < data->Mlx.win_h; x++)
-            mlx_put_pixel(data->Mlx.img, x, y, 0x000000FF); // black
-    }
-	draw_map(data);
-    draw_player(data->Mlx.img, data);
-    draw_player_line(data);
-}
-void	ss(void)
-{
-	system("leaks cub3D");
-}
 
 void    debug_game(t_game *game)
 {
@@ -82,7 +34,7 @@ void    debug_game(t_game *game)
 
     printf("========== MAP ==========\n");
     printf("Map size: %d x %d\n", game->map.height, game->map.width);
-    printf("Player at: (%d, %d) facing %c\n",
+    printf("Player at: (%f, %f) facing %c\n",
         game->map.player_pos.x,
         game->map.player_pos.y,
         game->map.player_dir);
@@ -93,7 +45,6 @@ void    debug_game(t_game *game)
     printf("===========================\n");
 }
 
-
 void	free_cfg(t_config *cfg)
 {
 	free(cfg->no_path);
@@ -101,13 +52,16 @@ void	free_cfg(t_config *cfg)
 	free(cfg->we_path);
 	free(cfg->ea_path);
 }
-
+// void	ss(void)
+// {
+// 	system("leaks cub3D");
+// }
 int	main(int argc, char **argv)
 {
 	t_game	cub;
     t_data *data;
-    
 	// atexit(ss);
+     
 	ft_memset(&cub, 0, sizeof(t_game));
 	check_args(argc, argv[1]);
 	if (!parse_file(argv[1], &cub))
@@ -121,6 +75,7 @@ int	main(int argc, char **argv)
     data = malloc(sizeof(t_data));
 	data->map = cub.map;
 	data->cfg  = cub.cfg;
+    
 	window_size(data);
     data->Mlx.mlx = mlx_init(data->Mlx.win_w, data->Mlx.win_h, "My MLX42 Window", false);
     
@@ -132,9 +87,11 @@ int	main(int argc, char **argv)
 	draw_map(data);
 	init_player(data);
 	draw_player(data->Mlx.img, data);
-    draw_player_line(data);
-	mlx_key_hook(data->Mlx.mlx , &key_hook ,&data->player);
-	mlx_loop_hook(data->Mlx.mlx, update, data);
+    // draw_player_line(data);
+	mlx_key_hook(data->Mlx.mlx , &key_hook ,data);
+	// mlx_loop_hook(data->Mlx.mlx, update, data);
+    mlx_loop_hook(data->Mlx.mlx, cast_rays, data);
+    // cast_rays(data);
     mlx_loop(data->Mlx.mlx); 
 	free2d(cub.map.grid);
 	free_cfg(&cub.cfg);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map2.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 14:55:25 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/09/06 19:29:52 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/09/22 12:04:53 by naessgui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,11 +90,11 @@ int	validate_map(t_map *map)
 	if (!map->grid)
 		return (0);
 	if (!player_exists(map))
-		return (free2d(map->grid), 0);
+		return (0);
 	if (!extract_player_info(map))
-		return (free2d(map->grid), 0);
+		return (0);
 	if (!validate_closed_map(map))
-		return (free2d(map->grid), 0);
+		return (0);
 	free_map_list(map->list);
 	return (1);
 }
