@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 17:17:52 by naessgui          #+#    #+#             */
-/*   Updated: 2025/10/11 22:37:10 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/10/11 22:40:54 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 
 void render_wall_strip(t_data *data, int stripid)
 {
+    double corrected_distance = data->ray[stripid].distance * cos(data->ray[stripid].ray_angle - data->player->player_angle);
     double projection_plane = (data->Mlx.win_w / 2) / tan((FOV_ANGLE * M_PI / 180) / 2);
-    double wall_h = (tile_size / data->ray[stripid].distance) * projection_plane;
+    double wall_h = (tile_size / corrected_distance) * projection_plane;
     
     int wall_top = (data->Mlx.win_h / 2) - (wall_h / 2);
     int wall_bottom = (data->Mlx.win_h / 2) + (wall_h / 2);
