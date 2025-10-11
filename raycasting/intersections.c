@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 18:19:40 by naessgui          #+#    #+#             */
-/*   Updated: 2025/10/10 17:44:00 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/10/11 21:41:20 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ double distance(double x1, double y1, double x2, double y2)
 
  void init_ray(t_ray *ray)
  {
-    ray = malloc(sizeof(t_ray));
     ray->horz_wallhit_x = 0;
     ray->vert_wallhit_x = 0;
 	ray->vert_wallhit_y = 0;

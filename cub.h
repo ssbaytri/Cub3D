@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 15:48:46 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/10/09 20:34:02 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/10/11 21:52:11 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,10 @@
 #define tile_size 50
 #define FOV_ANGLE 60
 #define  WALL_STRIP_WIDTH 1
+
+#define WINDOW_WIDTH 1280
+#define WINDOW_HEIGHT 720
+
 
 #define MLX_KEY_RIGHT   262
 #define MLX_KEY_LEFT    263

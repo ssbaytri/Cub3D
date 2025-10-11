@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 20:26:03 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/10/09 20:18:38 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/10/11 21:53:25 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,9 @@ int	main(int argc, char **argv)
     data->Mlx.img = mlx_new_image(data->Mlx.mlx, data->Mlx.win_w, data->Mlx.win_h);
 	
 	mlx_image_to_window(data->Mlx.mlx, data->Mlx.img, 0, 0);
-	draw_map(data);
+	// draw_map(data);
 	init_player(data);
-	draw_player(data->Mlx.img, data);
+	// draw_player(data->Mlx.img, data);
     // draw_player_line(data);
 	mlx_key_hook(data->Mlx.mlx , &key_hook ,data);
 	// mlx_loop_hook(data->Mlx.mlx, update, data);

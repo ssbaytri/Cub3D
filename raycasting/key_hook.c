@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   key_hook.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 12:15:59 by naessgui          #+#    #+#             */
-/*   Updated: 2025/10/09 20:00:48 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/10/11 21:53:08 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,6 @@ void update(void *param)
 	if (has_wall_at(data ,data->player->pos->x + new_x, data->player->pos->y + new_y ))
 		return;
 	wall_collision(data ,new_x ,new_y);
-	draw_map(data);
-    draw_player(data->Mlx.img, data);
+	// draw_map(data);
+    // draw_player(data->Mlx.img, data);
 }

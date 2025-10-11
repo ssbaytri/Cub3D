@@ -3,36 +3,70 @@
 /*                                                        :::      ::::::::   */
 /*   ray_cast.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naessgui <naessgui@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 17:17:52 by naessgui          #+#    #+#             */
-/*   Updated: 2025/10/09 20:16:18 by naessgui         ###   ########.fr       */
+/*   Updated: 2025/10/11 22:37:10 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub.h"
 
+void render_wall_strip(t_data *data, int stripid)
+{
+    double projection_plane = (data->Mlx.win_w / 2) / tan((FOV_ANGLE * M_PI / 180) / 2);
+    double wall_h = (tile_size / data->ray[stripid].distance) * projection_plane;
+    
+    int wall_top = (data->Mlx.win_h / 2) - (wall_h / 2);
+    int wall_bottom = (data->Mlx.win_h / 2) + (wall_h / 2);
+    
+    if (wall_top < 0) wall_top = 0;
+    if (wall_bottom >= data->Mlx.win_h) wall_bottom = data->Mlx.win_h - 1;
+    
+    // draw wall:
+    for (int y = wall_top; y <= wall_bottom; y++)
+    {
+        mlx_put_pixel(data->Mlx.img, stripid * WALL_STRIP_WIDTH, y, WHITE);
+    }
+}
+
+void clear_image(t_data *data)
+{
+    for (int y = 0; y < data->Mlx.win_h; y++)
+    {
+        for (int x = 0; x < data->Mlx.win_w; x++)
+        {
+            mlx_put_pixel(data->Mlx.img, x, y, BLACK);
+        }
+    }
+}
+
+
+
 void cast_single_ray(t_data *data, __unused double ray_angle , int stripid)
 {
     horizontal_intersections(data, data->player , stripid);
 	vertical_intersections(data , data->player , stripid);
-	if (data->ray[stripid].vert_hitdistance > data->ray[stripid].horz_hitdistance )
+	if (data->ray[stripid].vert_hitdistance > data->ray[stripid].horz_hitdistance)
     {
         data->ray[stripid].wall_hit_x =   data->ray[stripid].horz_wallhit_x;
-        data->ray[stripid].wall_hit_y =  data->ray[stripid].horz_wallhit_y; 
+        data->ray[stripid].wall_hit_y =  data->ray[stripid].horz_wallhit_y;
+        data->ray[stripid].distance = data->ray[stripid].horz_hitdistance;
     }
     else
     {
         data->ray[stripid].wall_hit_x =  data->ray[stripid].vert_wallhit_x;
         data->ray[stripid].wall_hit_y =  data->ray[stripid].vert_wallhit_y;
+        data->ray[stripid].distance = data->ray[stripid].vert_hitdistance;
     }
-    draw_player_line(data , data->player->pos->x , data->player->pos->y ,data->ray[stripid].wall_hit_x , data->ray[stripid].wall_hit_y);
+    // draw_player_line(data , data->player->pos->x , data->player->pos->y ,data->ray[stripid].wall_hit_x , data->ray[stripid].wall_hit_y);
+    render_wall_strip(data, stripid);
 }
 void cast_rays(void *param)
 {
     t_data *data = (t_data *)param ;
     update(param);
-    
+    clear_image(data);
 	int num_rays = data->Mlx.win_w / WALL_STRIP_WIDTH;
     data->ray = malloc(sizeof(t_ray) * num_rays);
 	double ray_angle = data->player->player_angle - ((FOV_ANGLE  * M_PI /180) / 2);
@@ -43,8 +77,6 @@ void cast_rays(void *param)
         data->ray[i].ray_angle = ray_angle;
 		cast_single_ray(data, ray_angle , i);
 		ray_angle += (FOV_ANGLE * M_PI / 180) / num_rays;
-    
 		i++;
 	}
-		
 }

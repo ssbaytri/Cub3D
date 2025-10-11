@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 13:21:57 by naessgui          #+#    #+#             */
-/*   Updated: 2025/10/10 15:13:57 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/10/11 21:52:49 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void window_size(t_data *data)
 {
-	data->Mlx.win_h =data->map.height * tile_size;
-	data->Mlx.win_w = data->map.width * tile_size;
+	data->Mlx.win_h = WINDOW_HEIGHT;
+	data->Mlx.win_w = WINDOW_WIDTH;
 
 }
 
