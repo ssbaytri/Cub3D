@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 18:19:40 by naessgui          #+#    #+#             */
-/*   Updated: 2025/10/12 10:28:53 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/10/12 16:03:31 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void horizontal_intersections(t_data *data , t_player *p , int i)
     }
 
     if (sin(data->ray[i].ray_angle) < 0) {
-       data->ray[i].y_horizontal = ((int)p->pos->y / tile_size) * tile_size;
+       data->ray[i].y_horizontal = ((int)p->pos->y / tile_size) * tile_size - EPSILON;
         y_step *= -1;
     }
 
@@ -74,7 +74,7 @@ void vertical_intersections(t_data *data , t_player *p , int i)
     }
 
     if (cos(data->ray[i].ray_angle) < 0) {
-        data->ray[i].x_vertical = ((int)p->pos->x / tile_size) * tile_size;
+        data->ray[i].x_vertical = ((int)p->pos->x / tile_size) * tile_size - EPSILON;
         x_step *= -1;
     }
 

@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 17:17:52 by naessgui          #+#    #+#             */
-/*   Updated: 2025/10/12 10:24:24 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/10/12 16:07:55 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,12 @@ void cast_single_ray(t_data *data, __unused double ray_angle , int stripid)
         data->ray[stripid].wall_hit_y =  data->ray[stripid].vert_wallhit_y;
         data->ray[stripid].distance = data->ray[stripid].vert_hitdistance;
     }
-    draw_player_line(data , data->player->pos->x , data->player->pos->y ,data->ray[stripid].wall_hit_x , data->ray[stripid].wall_hit_y);
+    // draw_player_line(data , data->player->pos->x , data->player->pos->y ,data->ray[stripid].wall_hit_x , data->ray[stripid].wall_hit_y);
     render_wall_strip(data, stripid);
 }
 void cast_rays(void *param)
 {
-    t_data *data = (t_data *)param ;
+    t_data *data = (t_data *)param;
     update(param);
     clear_image(data);
 	int num_rays = data->Mlx.win_w / WALL_STRIP_WIDTH;

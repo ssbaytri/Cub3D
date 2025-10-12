@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 15:48:46 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/10/12 10:00:52 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/10/12 16:03:17 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 #define FOV_ANGLE 60
 #define  WALL_STRIP_WIDTH 1
 #define WALL_COLOR ((int[]){ 255, 255, 255 })
+#define EPSILON 0.0001
 
 #define WINDOW_WIDTH 1980
 #define WINDOW_HEIGHT 1080
