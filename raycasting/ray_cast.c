@@ -6,11 +6,16 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 17:17:52 by naessgui          #+#    #+#             */
-/*   Updated: 2025/10/11 22:40:54 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/10/12 10:24:24 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub.h"
+
+uint32_t create_trgb(int *rgb)
+{
+    return ((rgb[0] << 24) | (rgb[1] << 16) | (rgb[2] << 8) | 0xFF);
+}
 
 void render_wall_strip(t_data *data, int stripid)
 {
@@ -23,12 +28,18 @@ void render_wall_strip(t_data *data, int stripid)
     
     if (wall_top < 0) wall_top = 0;
     if (wall_bottom >= data->Mlx.win_h) wall_bottom = data->Mlx.win_h - 1;
+
+    // draw ceiling:
+    for (int y = 0; y < wall_top; y++)
+        mlx_put_pixel(data->Mlx.img, stripid * WALL_STRIP_WIDTH, y, create_trgb(data->cfg.ceil_rgb));
     
     // draw wall:
-    for (int y = wall_top; y <= wall_bottom; y++)
-    {
-        mlx_put_pixel(data->Mlx.img, stripid * WALL_STRIP_WIDTH, y, WHITE);
-    }
+    for (int y = wall_top; y < wall_bottom; y++)
+        mlx_put_pixel(data->Mlx.img, stripid * WALL_STRIP_WIDTH, y, create_trgb(WALL_COLOR));
+
+    // draw floor:
+    for (int y = wall_bottom + 1; y < data->Mlx.win_h; y++)
+        mlx_put_pixel(data->Mlx.img, stripid * WALL_STRIP_WIDTH, y, create_trgb(data->cfg.floor_rgb));
 }
 
 void clear_image(t_data *data)
@@ -60,7 +71,7 @@ void cast_single_ray(t_data *data, __unused double ray_angle , int stripid)
         data->ray[stripid].wall_hit_y =  data->ray[stripid].vert_wallhit_y;
         data->ray[stripid].distance = data->ray[stripid].vert_hitdistance;
     }
-    // draw_player_line(data , data->player->pos->x , data->player->pos->y ,data->ray[stripid].wall_hit_x , data->ray[stripid].wall_hit_y);
+    draw_player_line(data , data->player->pos->x , data->player->pos->y ,data->ray[stripid].wall_hit_x , data->ray[stripid].wall_hit_y);
     render_wall_strip(data, stripid);
 }
 void cast_rays(void *param)
