@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 15:48:46 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/10/12 16:03:17 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/10/12 18:50:39 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 #define RED 0xFF0000FF
 #define GRAY 0x808080FF
 #define LIGHT_GRAY 0xD3D3D3FF
-#define tile_size 50
+#define tile_size 64
 #define FOV_ANGLE 60
 #define  WALL_STRIP_WIDTH 1
 #define WALL_COLOR ((int[]){ 255, 255, 255 })
@@ -152,8 +152,16 @@ typedef struct s_ray
 	double horz_hitdistance;
 	int found_horz_wall_hit;
 	int found_vert_wall_hit;
-	
+	int was_vert_hit;
 }t_ray;
+
+typedef struct s_textures
+{
+	mlx_texture_t *north;
+	mlx_texture_t *south;
+	mlx_texture_t *east;
+	mlx_texture_t *west;
+}				t_textures;
 
 typedef struct s_data
 {
@@ -163,7 +171,8 @@ typedef struct s_data
     t_player *player;
 	t_dir dir;
 	t_ray *ray;
-}t_data;
+	t_textures textures;
+}				t_data;
 
 
 

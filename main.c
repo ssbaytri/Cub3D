@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 20:26:03 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/10/12 09:45:31 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/10/12 18:48:27 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,40 @@ void	free_cfg(t_config *cfg)
 	free(cfg->we_path);
 	free(cfg->ea_path);
 }
+
+void load_textures(t_data *data)
+{
+    data->textures.north = mlx_load_png(data->cfg.no_path);
+    if (!data->textures.north)
+    {
+        printf("Error: Failed to load North texture: %s\n", data->cfg.no_path);
+        exit(1);
+    }
+    
+    data->textures.south = mlx_load_png(data->cfg.so_path);
+    if (!data->textures.south)
+    {
+        printf("Error: Failed to load South texture: %s\n", data->cfg.so_path);
+        exit(1);
+    }
+    
+    data->textures.west = mlx_load_png(data->cfg.we_path);
+    if (!data->textures.west)
+    {
+        printf("Error: Failed to load West texture: %s\n", data->cfg.we_path);
+        exit(1);
+    }
+    
+    data->textures.east = mlx_load_png(data->cfg.ea_path);
+    if (!data->textures.east)
+    {
+        printf("Error: Failed to load East texture: %s\n", data->cfg.ea_path);
+        exit(1);
+    }
+    
+    printf("All textures loaded successfully!\n");
+}
+
 // void	ss(void)
 // {
 // 	system("leaks cub3D");
@@ -82,6 +116,7 @@ int	main(int argc, char **argv)
     if (!data->Mlx.mlx)
         return (EXIT_FAILURE);
     data->Mlx.img = mlx_new_image(data->Mlx.mlx, data->Mlx.win_w, data->Mlx.win_h);
+    load_textures(data);
 	
 	mlx_image_to_window(data->Mlx.mlx, data->Mlx.img, 0, 0);
 	// draw_map(data);

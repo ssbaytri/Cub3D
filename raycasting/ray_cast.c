@@ -6,11 +6,35 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 17:17:52 by naessgui          #+#    #+#             */
-/*   Updated: 2025/10/12 16:07:55 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/10/12 18:55:35 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub.h"
+
+
+mlx_texture_t *get_wall_texture(t_data *data, int stripid)
+{
+    double ray_angle;
+
+    ray_angle = data->ray[stripid].ray_angle;
+    if (data->ray[stripid].was_vert_hit)
+    {
+        if (ray_angle > M_PI / 2 && ray_angle < 3 * M_PI / 2)
+            return data->textures.west;
+        else
+            return data->textures.east;
+    }
+    else
+    {
+        if (ray_angle > 0 && ray_angle < M_PI)
+            return data->textures.south;
+        else
+            return data->textures.north;
+    }
+}
+
+double get_texture_offset()
 
 uint32_t create_trgb(int *rgb)
 {
@@ -64,12 +88,14 @@ void cast_single_ray(t_data *data, __unused double ray_angle , int stripid)
         data->ray[stripid].wall_hit_x =   data->ray[stripid].horz_wallhit_x;
         data->ray[stripid].wall_hit_y =  data->ray[stripid].horz_wallhit_y;
         data->ray[stripid].distance = data->ray[stripid].horz_hitdistance;
+        data->ray[stripid].was_vert_hit = 0;
     }
     else
     {
         data->ray[stripid].wall_hit_x =  data->ray[stripid].vert_wallhit_x;
         data->ray[stripid].wall_hit_y =  data->ray[stripid].vert_wallhit_y;
         data->ray[stripid].distance = data->ray[stripid].vert_hitdistance;
+                data->ray[stripid].was_vert_hit = 1;
     }
     // draw_player_line(data , data->player->pos->x , data->player->pos->y ,data->ray[stripid].wall_hit_x , data->ray[stripid].wall_hit_y);
     render_wall_strip(data, stripid);
