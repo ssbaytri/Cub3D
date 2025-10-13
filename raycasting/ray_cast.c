@@ -34,7 +34,6 @@ mlx_texture_t *get_wall_texture(t_data *data, int stripid)
     }
 }
 
-double get_texture_offset()
 
 uint32_t create_trgb(int *rgb)
 {
@@ -79,7 +78,7 @@ void clear_image(t_data *data)
 
 
 
-void cast_single_ray(t_data *data, __unused double ray_angle , int stripid)
+void cast_single_ray(t_data *data, int stripid)
 {
     horizontal_intersections(data, data->player , stripid);
 	vertical_intersections(data , data->player , stripid);
@@ -113,7 +112,7 @@ void cast_rays(void *param)
 	{
 		init_ray(&data->ray[i]);
         data->ray[i].ray_angle = ray_angle;
-		cast_single_ray(data, ray_angle , i);
+		cast_single_ray(data, i);
 		ray_angle += (FOV_ANGLE * M_PI / 180) / num_rays;
 		i++;
 	}

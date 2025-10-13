@@ -36,8 +36,8 @@
 #define WALL_COLOR ((int[]){ 255, 255, 255 })
 #define EPSILON 0.0001
 
-#define WINDOW_WIDTH 1980
-#define WINDOW_HEIGHT 1080
+#define WINDOW_WIDTH 1280
+#define WINDOW_HEIGHT 720
 
 #define MLX_KEY_RIGHT   262
 #define MLX_KEY_LEFT    263
@@ -195,7 +195,7 @@ void horizontal_intersections(t_data *data , t_player *p , int i);
 void vertical_intersections(t_data *data, t_player *p , int i);
 double normalize_angle(double angle);
  void init_ray(t_ray *ray);
-void cast_single_ray(t_data *data,__unused double ray_angle , int stripid);
+void cast_single_ray(t_data *data, int stripid);
 
 void cast_rays(void *param);
 
