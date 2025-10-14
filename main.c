@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 20:26:03 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/10/14 15:44:50 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/10/14 17:11:27 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ int	main(int argc, char **argv)
 	data->cfg  = cub.cfg;
     
 	window_size(data);
-    data->Mlx.mlx = mlx_init(data->Mlx.win_w, data->Mlx.win_h, "My MLX42 Window", false);
+    data->Mlx.mlx = mlx_init(data->Mlx.win_w, data->Mlx.win_h, "Cub3D", false);
     
     if (!data->Mlx.mlx)
         return (EXIT_FAILURE);

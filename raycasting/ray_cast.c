@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 17:17:52 by naessgui          #+#    #+#             */
-/*   Updated: 2025/10/12 18:55:35 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/10/14 16:53:01 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,11 @@ void render_wall_strip(t_data *data, int stripid)
     double projection_plane = (data->Mlx.win_w / 2) / tan((FOV_ANGLE * M_PI / 180) / 2);
     double wall_h = (tile_size / corrected_distance) * projection_plane;
     
-    int wall_top = (data->Mlx.win_h / 2) - (wall_h / 2);
-    int wall_bottom = (data->Mlx.win_h / 2) + (wall_h / 2);
+    int wall_top_unclamped = (data->Mlx.win_h / 2) - (wall_h / 2);
+    int wall_bottom_unclamped = (data->Mlx.win_h / 2) + (wall_h / 2);
+
+    int wall_top = wall_top_unclamped;
+    int wall_bottom = wall_bottom_unclamped;
     
     if (wall_top < 0) wall_top = 0;
     if (wall_bottom >= data->Mlx.win_h) wall_bottom = data->Mlx.win_h - 1;
@@ -106,7 +109,7 @@ void render_wall_strip(t_data *data, int stripid)
         if (y < 0 || y >= data->Mlx.win_h)
             continue;
 
-        int distance_from_top = y - wall_top;
+        int distance_from_top = y - wall_top_unclamped;
         int tex_y = (int)((double)distance_from_top / wall_h * texture->height2);
 
         uint32_t color = get_texture_color(texture, tex_x, tex_y);
