@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 20:26:03 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/10/12 18:48:27 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/10/14 15:44:50 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,19 @@ void load_textures(t_data *data)
     printf("All textures loaded successfully!\n");
 }
 
+void clean_textures(t_data *data)
+{
+    if (data->textures.north)
+        mlx_delete_texture(data->textures.north);
+    if (data->textures.south)
+        mlx_delete_texture(data->textures.south);
+    if (data->textures.east)
+        mlx_delete_texture(data->textures.east);
+    if (data->textures.west)
+        mlx_delete_texture(data->textures.west);
+}
+
+
 // void	ss(void)
 // {
 // 	system("leaks cub3D");
@@ -127,8 +140,9 @@ int	main(int argc, char **argv)
 	// mlx_loop_hook(data->Mlx.mlx, update, data);
     mlx_loop_hook(data->Mlx.mlx, cast_rays, data);
     // cast_rays(data);
-    mlx_loop(data->Mlx.mlx); 
+    mlx_loop(data->Mlx.mlx);
 	free2d(cub.map.grid);
 	free_cfg(&cub.cfg);
+    clean_textures(data);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 15:48:46 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/10/12 18:50:39 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/10/14 15:46:12 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@
 #define WALL_COLOR ((int[]){ 255, 255, 255 })
 #define EPSILON 0.0001
 
-#define WINDOW_WIDTH 1280
-#define WINDOW_HEIGHT 720
+#define WINDOW_WIDTH 1920
+#define WINDOW_HEIGHT 1080
 
 #define MLX_KEY_RIGHT   262
 #define MLX_KEY_LEFT    263
