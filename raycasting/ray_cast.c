@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 17:17:52 by naessgui          #+#    #+#             */
-/*   Updated: 2025/10/16 22:39:21 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/10/17 00:26:12 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,14 @@ void	cast_single_ray(t_data *data, int stripid)
 	render_wall_strip(data, stripid);
 }
 
+double	normalize_angle(double angle)
+{
+	angle = fmod(angle, 2 * M_PI);
+	if (angle < 0)
+		angle += 2 * M_PI;
+	return (angle);
+}
+
 void	cast_rays(void *param)
 {
 	t_data	*data;
@@ -70,6 +78,7 @@ void	cast_rays(void *param)
 	double	ray_angle;
 
 	data = (t_data *)param;
+	mouse_move(param);
 	update(param);
 	clear_image(data);
 	num_rays = data->mlx.win_w / WALL_STRIP_WIDTH;
@@ -79,7 +88,7 @@ void	cast_rays(void *param)
 	while (i < num_rays)
 	{
 		init_ray(&data->ray[i]);
-		data->ray[i].ray_angle = ray_angle;
+		data->ray[i].ray_angle = normalize_angle(ray_angle);
 		cast_single_ray(data, i);
 		ray_angle += (FOV_ANGLE * M_PI / 180) / num_rays;
 		i++;

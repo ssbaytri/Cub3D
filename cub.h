@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 15:48:46 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/10/16 22:53:57 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/10/17 00:25:34 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 # define FOV_ANGLE 60
 # define WALL_STRIP_WIDTH 1
 # define EPSILON 0.0001
+# define SENSITIVITY 0.001
 
 # define WINDOW_WIDTH 1920
 # define WINDOW_HEIGHT 1080
@@ -185,6 +186,7 @@ void					update(void *param);
 void					wall_collision(t_data *data, double new_x,
 							double new_y);
 int						has_wall_at(t_data *data, float x, float y);
+void					mouse_move(void *param);
 
 /* ************************************************************************** */
 /*                                 RAYCASTING                                 */

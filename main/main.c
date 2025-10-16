@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 20:26:03 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/10/16 22:46:11 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/10/17 00:25:38 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,20 @@ static void	debug_game(t_data *data)
 	printf("===========================\n");
 }
 
+void	mouse_move(void *param)
+{
+	t_data	*data;
+	int32_t	xpos;
+	int32_t	ypos;
+	int		center_x;
+
+	data = (t_data *)param;
+	center_x = data->mlx.win_w / 2;
+	mlx_get_mouse_pos(data->mlx.mlx, &xpos, &ypos);
+	data->player->player_angle += (xpos - center_x) * SENSITIVITY;
+	mlx_set_mouse_pos(data->mlx.mlx, data->mlx.win_w / 2, data->mlx.win_h / 2);
+}
+
 void	ss(void)
 {
 	system("leaks cub3D");
@@ -62,6 +76,7 @@ int	main(int argc, char **argv)
 			data->mlx.win_h);
 	mlx_image_to_window(data->mlx.mlx, data->mlx.img, 0, 0);
 	init_player(data);
+	mlx_set_cursor_mode(data->mlx.mlx, MLX_MOUSE_DISABLED);
 	mlx_key_hook(data->mlx.mlx, &key_hook, data);
 	mlx_loop_hook(data->mlx.mlx, cast_rays, data);
 	mlx_loop(data->mlx.mlx);
