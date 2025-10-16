@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 15:20:30 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/10/12 09:33:56 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/10/16 19:22:08 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	free2d(char **arr)
 	i = 0;
 	while (arr[i])
 	{
-		free(arr[i]);	
+		free(arr[i]);
 		i++;
 	}
 	free(arr);
