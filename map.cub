@@ -1,7 +1,7 @@
-NO ./textures/4.png
-SO ./textures/3.png
-WE ./textures/5.png
-EA ./textures/2.png
+NO ./textures/1.png
+SO ./textures/2.png
+WE ./textures/3.png
+EA ./textures/4.png
 
 C 56, 56, 56
 F 112, 112, 112

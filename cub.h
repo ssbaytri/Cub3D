@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 15:48:46 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/10/16 21:06:26 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/10/16 22:47:30 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,20 @@ typedef struct s_textures
 	mlx_texture_t		*west;
 }						t_textures;
 
+typedef struct s_render
+{
+	double				corrected_distance;
+	double				wall_h;
+	int					wall_top_unclamped;
+	int					wall_bottom_unclamped;
+	int					wall_top;
+	int					wall_bottom;
+	mlx_texture_t		*texture;
+	double				tex_offset;
+	int					tex_x;
+	int					x;
+}						t_render;
+
 typedef struct s_data
 {
 	t_mlx				mlx;
@@ -166,12 +180,20 @@ void					horizontal_intersections(t_data *data, t_player *p,
 							int i);
 void					vertical_intersections(t_data *data, t_player *p,
 							int i);
-void					init_ray(t_ray *ray);
 void					cast_single_ray(t_data *data, int stripid);
 void					wall_collision(t_data *data, double new_x,
 							double new_y);
 void					cast_rays(void *param);
 int						load_textures(t_data *data);
+
+mlx_texture_t			*get_wall_texture(t_data *data, int stripid);
+double					get_texture_offset(t_data *data, int stripid);
+uint32_t				get_texture_color(mlx_texture_t *texture, int x, int y);
+uint32_t				create_trgb(int *rgb);
+void					render_wall_strip(t_data *data, int stripid);
+
+int						cleanup_error(t_data *data);
+void					cleanup_success(t_data *data);
 
 /* ************************************************************************** */
 /*                            Argument Checking                               */
