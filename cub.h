@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 15:48:46 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/10/16 22:47:30 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/10/16 22:53:57 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include "libft/libft.h"
 # include "mlx/include/MLX42/MLX42.h"
-# include <errno.h>
 # include <fcntl.h>
 # include <limits.h>
 # include <math.h>
@@ -170,45 +169,62 @@ typedef struct s_data
 	t_textures			textures;
 }						t_data;
 
+/* ************************************************************************** */
+/*                               INITIALIZATION                               */
+/* ************************************************************************** */
 void					window_size(t_data *data);
 void					init_player(t_data *data);
+int						load_textures(t_data *data);
+
+/* ************************************************************************** */
+/*                             INPUT & MOVEMENT                               */
+/* ************************************************************************** */
 void					key_hook(mlx_key_data_t keydata, void *param);
 void					reset_var(mlx_key_data_t keydata, t_data *data);
-int						has_wall_at(t_data *data, float x, float y);
 void					update(void *param);
+void					wall_collision(t_data *data, double new_x,
+							double new_y);
+int						has_wall_at(t_data *data, float x, float y);
+
+/* ************************************************************************** */
+/*                                 RAYCASTING                                 */
+/* ************************************************************************** */
+void					cast_rays(void *param);
+void					cast_single_ray(t_data *data, int stripid);
 void					horizontal_intersections(t_data *data, t_player *p,
 							int i);
 void					vertical_intersections(t_data *data, t_player *p,
 							int i);
-void					cast_single_ray(t_data *data, int stripid);
-void					wall_collision(t_data *data, double new_x,
-							double new_y);
-void					cast_rays(void *param);
-int						load_textures(t_data *data);
 
+/* ************************************************************************** */
+/*                                 RENDERING                                  */
+/* ************************************************************************** */
 mlx_texture_t			*get_wall_texture(t_data *data, int stripid);
 double					get_texture_offset(t_data *data, int stripid);
 uint32_t				get_texture_color(mlx_texture_t *texture, int x, int y);
 uint32_t				create_trgb(int *rgb);
 void					render_wall_strip(t_data *data, int stripid);
 
+/* ************************************************************************** */
+/*                                   CLEANUP                                  */
+/* ************************************************************************** */
 int						cleanup_error(t_data *data);
 void					cleanup_success(t_data *data);
 
 /* ************************************************************************** */
-/*                            Argument Checking                               */
+/*                            ARGUMENT CHECKING                               */
 /* ************************************************************************** */
 void					check_args(int ac, char *str);
 
 /* ************************************************************************** */
-/*                            File Parsing                                    */
+/*                               FILE PARSING                                 */
 /* ************************************************************************** */
 int						parse_file(char *file, t_data *data);
 int						parse_config(int fd, t_config *cfg);
 int						parse_map(int fd, t_map_list **map_lines);
 
 /* ************************************************************************** */
-/*                            Config Helpers                                  */
+/*                               CONFIG HELPERS                               */
 /* ************************************************************************** */
 int						handle_texture_config(t_config *cfg, char **tmp);
 int						handle_color_config(t_config *cfg, char **tmp,
@@ -218,7 +234,7 @@ int						validate_and_store_rgb(char **rgb, int *rgb_arr);
 int						count_commas(char *str);
 
 /* ************************************************************************** */
-/*                            String / Array Utils                            */
+/*                            STRING / ARRAY UTILS                            */
 /* ************************************************************************** */
 char					**ft_split2(char *str);
 int						arr_len(char **arr);
@@ -226,7 +242,7 @@ void					free2d(char **arr);
 int						check_empty_line(char *line);
 
 /* ************************************************************************** */
-/*                            Map List Utils                                  */
+/*                             MAP LIST UTILS                                 */
 /* ************************************************************************** */
 t_map_list				*create_map_node(char *line);
 void					add_map_line(t_map_list **list, t_map_list *new_node);
@@ -237,7 +253,7 @@ char					**list_to_2d(t_map_list *head, int *final_height,
 							int *final_width);
 
 /* ************************************************************************** */
-/*                            Map Validation                                  */
+/*                              MAP VALIDATION                                */
 /* ************************************************************************** */
 int						is_map_line_valid(char *line);
 int						validate_closed_map(t_map *map);
