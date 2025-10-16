@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 20:26:03 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/10/16 18:51:27 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/10/16 21:07:33 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,15 +88,15 @@ int	main(int argc, char **argv)
 	}
     printf("Valid map and textures\n");
 	window_size(data);
-    data->Mlx.mlx = mlx_init(data->Mlx.win_w, data->Mlx.win_h, "Cub3D", false);
-    if (!data->Mlx.mlx)
+    data->mlx.mlx = mlx_init(data->mlx.win_w, data->mlx.win_h, "Cub3D", false);
+    if (!data->mlx.mlx)
         return (EXIT_FAILURE);
-    data->Mlx.img = mlx_new_image(data->Mlx.mlx, data->Mlx.win_w, data->Mlx.win_h);
-	mlx_image_to_window(data->Mlx.mlx, data->Mlx.img, 0, 0);
+    data->mlx.img = mlx_new_image(data->mlx.mlx, data->mlx.win_w, data->mlx.win_h);
+	mlx_image_to_window(data->mlx.mlx, data->mlx.img, 0, 0);
 	init_player(data);
-	mlx_key_hook(data->Mlx.mlx , &key_hook ,data);
-    mlx_loop_hook(data->Mlx.mlx, cast_rays, data);
-    mlx_loop(data->Mlx.mlx);
+	mlx_key_hook(data->mlx.mlx , &key_hook ,data);
+    mlx_loop_hook(data->mlx.mlx, cast_rays, data);
+    mlx_loop(data->mlx.mlx);
 	free2d(data->map.grid);
 	free_cfg(&data->cfg);
     free(data);

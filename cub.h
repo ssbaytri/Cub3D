@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 15:48:46 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/10/16 18:49:39 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/10/16 21:06:26 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,24 +25,23 @@
 # include <sys/time.h>
 # include <unistd.h>
 
-#define WHITE 0xFFFFFFFF
-#define BLACK 0xFF000000
-#define RED 0xFF0000FF
-#define GRAY 0x808080FF
-#define LIGHT_GRAY 0xD3D3D3FF
-#define tile_size 64
-#define FOV_ANGLE 60
-#define  WALL_STRIP_WIDTH 1
-#define WALL_COLOR ((int[]){ 255, 255, 255 })
-#define EPSILON 0.0001
+# define WHITE 0xFFFFFFFF
+# define BLACK 0xFF000000
+# define RED 0xFF0000FF
+# define GRAY 0x808080FF
+# define LIGHT_GRAY 0xD3D3D3FF
+# define TILE_SIZE 64
+# define FOV_ANGLE 60
+# define WALL_STRIP_WIDTH 1
+# define EPSILON 0.0001
 
-#define WINDOW_WIDTH 1920
-#define WINDOW_HEIGHT 1080
+# define WINDOW_WIDTH 1920
+# define WINDOW_HEIGHT 1080
 
-#define MLX_KEY_RIGHT   262
-#define MLX_KEY_LEFT    263
-#define MLX_KEY_DOWN    264
-#define MLX_KEY_UP      265
+# define MLX_KEY_RIGHT 262
+# define MLX_KEY_LEFT 263
+# define MLX_KEY_DOWN 264
+# define MLX_KEY_UP 265
 
 typedef struct s_marked
 {
@@ -98,96 +97,81 @@ typedef struct s_config
 
 typedef struct s_mlx
 {
-    mlx_t *mlx;
-    mlx_image_t *img;
-    int win_w;
-    int win_h;
-}	t_mlx;
+	mlx_t				*mlx;
+	mlx_image_t			*img;
+	int					win_w;
+	int					win_h;
+}						t_mlx;
 
 typedef struct s_player
 {
-	t_pos 	*pos;
-    int  turn_dir;
-    int walk_dir;
-	int rot_direction;
-    // mlx_image_t *img_p;
-    float move_speed;
-    float rot_speed;
-    float player_angle;
-	// float ray_angle;
-	// double y_horizontal;
-	// double x_horizontal;
-	// double y_vertical;
-	// double x_vertical;
-    int color;
-    int radius;
-}   t_player;
+	t_pos				*pos;
+	int					turn_dir;
+	int					walk_dir;
+	int					rot_direction;
+	float				move_speed;
+	float				rot_speed;
+	float				player_angle;
+	int					color;
+	int					radius;
+}						t_player;
 
 typedef struct s_ray
 {
-	double ray_angle;
-	double wall_hit_x;
-	double wall_hit_y;
-	double vert_wallhit_x;
-	double vert_wallhit_y;
-	double horz_wallhit_x;
-	double horz_wallhit_y;
-	double distance;
-	double y_horizontal;
-	double x_horizontal;
-	double y_vertical;
-	double x_vertical;
-	double vert_hitdistance;
-	double horz_hitdistance;
-	int found_horz_wall_hit;
-	int found_vert_wall_hit;
-	int was_vert_hit;
-}t_ray;
+	double				ray_angle;
+	double				wall_hit_x;
+	double				wall_hit_y;
+	double				vert_wallhit_x;
+	double				vert_wallhit_y;
+	double				horz_wallhit_x;
+	double				horz_wallhit_y;
+	double				distance;
+	double				y_horizontal;
+	double				x_horizontal;
+	double				y_vertical;
+	double				x_vertical;
+	double				vert_hitdistance;
+	double				horz_hitdistance;
+	int					found_horz_wall_hit;
+	int					found_vert_wall_hit;
+	int					was_vert_hit;
+}						t_ray;
 
 typedef struct s_textures
 {
-	mlx_texture_t *north;
-	mlx_texture_t *south;
-	mlx_texture_t *east;
-	mlx_texture_t *west;
-}				t_textures;
+	mlx_texture_t		*north;
+	mlx_texture_t		*south;
+	mlx_texture_t		*east;
+	mlx_texture_t		*west;
+}						t_textures;
 
 typedef struct s_data
 {
-    t_mlx Mlx;
-    t_map map;
-	t_config cfg;
-    t_player *player;
-	t_dir dir;
-	t_ray *ray;
-	t_textures textures;
-}				t_data;
+	t_mlx				mlx;
+	t_map				map;
+	t_config			cfg;
+	t_player			*player;
+	t_dir				dir;
+	t_ray				*ray;
+	t_textures			textures;
+}						t_data;
 
-
-
-
-void draw_rectangle(mlx_image_t *img, int j, int i, int color);
-void draw_player(mlx_image_t *img, t_data *data);
-// void init_map(t_data *data);
-// void cast_rays(t_data *data);
-void window_size(t_data *data);
-void init_player(t_data *data);
-void    draw_player_line(t_data *data, int x1, int y1, int x2, int y2);
-// void draw_player_line(t_data *data , );
-void draw_map(t_data *data);
-void key_hook(mlx_key_data_t keydata, void *param);
-void reset_var(mlx_key_data_t keydata , t_data *data);
-int has_wall_at(t_data *data, float x, float y);
-void update(void *param);
-// void cast_rays(t_data *data);
-void horizontal_intersections(t_data *data , t_player *p , int i);
-void vertical_intersections(t_data *data, t_player *p , int i);
-double normalize_angle(double angle);
- void init_ray(t_ray *ray);
-void cast_single_ray(t_data *data, int stripid);
-
-void cast_rays(void *param);
-int	load_textures(t_data *data);
+void					window_size(t_data *data);
+void					init_player(t_data *data);
+void					key_hook(mlx_key_data_t keydata, void *param);
+void					reset_var(mlx_key_data_t keydata, t_data *data);
+int						has_wall_at(t_data *data, float x, float y);
+void					update(void *param);
+void					horizontal_intersections(t_data *data, t_player *p,
+							int i);
+void					vertical_intersections(t_data *data, t_player *p,
+							int i);
+void					init_ray(t_ray *ray);
+void					cast_single_ray(t_data *data, int stripid);
+void					wall_collision(t_data *data, double new_x,
+							double new_y);
+void					cast_rays(void *param);
+int						load_textures(t_data *data);
 
 /* ************************************************************************** */
 /*                            Argument Checking                               */

@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 17:17:52 by naessgui          #+#    #+#             */
-/*   Updated: 2025/10/16 17:03:52 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/10/16 21:08:10 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,10 @@ double get_texture_offset(t_data *data, int stripid)
     double offset;
 
     if (data->ray[stripid].was_vert_hit)
-        offset = fmod(hit_y, tile_size);
+        offset = fmod(hit_y, TILE_SIZE);
     else
-        offset = fmod(hit_x, tile_size);
-    return (offset / tile_size);
+        offset = fmod(hit_x, TILE_SIZE);
+    return (offset / TILE_SIZE);
 }
 
 uint32_t get_texture_color(mlx_texture_t *texture, int x, int y)
@@ -77,17 +77,17 @@ uint32_t create_trgb(int *rgb)
 void render_wall_strip(t_data *data, int stripid)
 {
     double corrected_distance = data->ray[stripid].distance * cos(data->ray[stripid].ray_angle - data->player->player_angle);
-    double projection_plane = (data->Mlx.win_w / 2) / tan((FOV_ANGLE * M_PI / 180) / 2);
-    double wall_h = (tile_size / corrected_distance) * projection_plane;
+    double projection_plane = (data->mlx.win_w / 2) / tan((FOV_ANGLE * M_PI / 180) / 2);
+    double wall_h = (TILE_SIZE / corrected_distance) * projection_plane;
     
-    int wall_top_unclamped = (data->Mlx.win_h / 2) - (wall_h / 2);
-    int wall_bottom_unclamped = (data->Mlx.win_h / 2) + (wall_h / 2);
+    int wall_top_unclamped = (data->mlx.win_h / 2) - (wall_h / 2);
+    int wall_bottom_unclamped = (data->mlx.win_h / 2) + (wall_h / 2);
 
     int wall_top = wall_top_unclamped;
     int wall_bottom = wall_bottom_unclamped;
     
     if (wall_top < 0) wall_top = 0;
-    if (wall_bottom >= data->Mlx.win_h) wall_bottom = data->Mlx.win_h - 1;
+    if (wall_bottom >= data->mlx.win_h) wall_bottom = data->mlx.win_h - 1;
 
     mlx_texture_t *texture = get_wall_texture(data, stripid);
     double tex_offset = get_texture_offset(data, stripid);
@@ -97,7 +97,7 @@ void render_wall_strip(t_data *data, int stripid)
 
     // draw ceiling:
     for (int y = 0; y < wall_top; y++)
-        mlx_put_pixel(data->Mlx.img, stripid * WALL_STRIP_WIDTH, y, create_trgb(data->cfg.ceil_rgb));
+        mlx_put_pixel(data->mlx.img, stripid * WALL_STRIP_WIDTH, y, create_trgb(data->cfg.ceil_rgb));
     
     // draw wall:
     // for (int y = wall_top; y < wall_bottom; y++)
@@ -106,28 +106,28 @@ void render_wall_strip(t_data *data, int stripid)
     // Draw texture Wall
     for (int y = wall_top; y <= wall_bottom; y++)
     {
-        if (y < 0 || y >= data->Mlx.win_h)
+        if (y < 0 || y >= data->mlx.win_h)
             continue;
 
         int distance_from_top = y - wall_top_unclamped;
         int tex_y = (int)((double)distance_from_top / wall_h * texture->height2);
 
         uint32_t color = get_texture_color(texture, tex_x, tex_y);
-        mlx_put_pixel(data->Mlx.img, x, y, color);
+        mlx_put_pixel(data->mlx.img, x, y, color);
     }
 
     // draw floor:
-    for (int y = wall_bottom + 1; y < data->Mlx.win_h; y++)
-        mlx_put_pixel(data->Mlx.img, stripid * WALL_STRIP_WIDTH, y, create_trgb(data->cfg.floor_rgb));
+    for (int y = wall_bottom + 1; y < data->mlx.win_h; y++)
+        mlx_put_pixel(data->mlx.img, stripid * WALL_STRIP_WIDTH, y, create_trgb(data->cfg.floor_rgb));
 }
 
 void clear_image(t_data *data)
 {
-    for (int y = 0; y < data->Mlx.win_h; y++)
+    for (int y = 0; y < data->mlx.win_h; y++)
     {
-        for (int x = 0; x < data->Mlx.win_w; x++)
+        for (int x = 0; x < data->mlx.win_w; x++)
         {
-            mlx_put_pixel(data->Mlx.img, x, y, BLACK);
+            mlx_put_pixel(data->mlx.img, x, y, BLACK);
         }
     }
 }
@@ -160,7 +160,7 @@ void cast_rays(void *param)
     t_data *data = (t_data *)param;
     update(param);
     clear_image(data);
-	int num_rays = data->Mlx.win_w / WALL_STRIP_WIDTH;
+	int num_rays = data->mlx.win_w / WALL_STRIP_WIDTH;
     data->ray = ft_calloc(num_rays, sizeof(t_ray));
 	double ray_angle = data->player->player_angle - ((FOV_ANGLE  * M_PI /180) / 2);
 	int i = 0;

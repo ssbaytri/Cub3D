@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 18:19:40 by naessgui          #+#    #+#             */
-/*   Updated: 2025/10/12 16:03:31 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/10/16 21:04:26 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,14 @@ double distance(double x1, double y1, double x2, double y2)
 
 void horizontal_intersections(t_data *data , t_player *p , int i)
 {
-    double y_step = tile_size;
+    double y_step = TILE_SIZE;
     if (sin(data->ray[i].ray_angle) > 0) {
-       data->ray[i].y_horizontal = ((int)p->pos->y / tile_size) * tile_size + tile_size;
+       data->ray[i].y_horizontal = ((int)p->pos->y / TILE_SIZE) * TILE_SIZE + TILE_SIZE;
         y_step *= 1;
     }
 
     if (sin(data->ray[i].ray_angle) < 0) {
-       data->ray[i].y_horizontal = ((int)p->pos->y / tile_size) * tile_size - EPSILON;
+       data->ray[i].y_horizontal = ((int)p->pos->y / TILE_SIZE) * TILE_SIZE - EPSILON;
         y_step *= -1;
     }
 
@@ -66,15 +66,15 @@ void horizontal_intersections(t_data *data , t_player *p , int i)
 
 void vertical_intersections(t_data *data , t_player *p , int i)
 {
-    double x_step = tile_size;
+    double x_step = TILE_SIZE;
 
     if (cos(data->ray[i].ray_angle) > 0) {
-        data->ray[i].x_vertical = ((int)p->pos->x / tile_size) * tile_size + tile_size;
+        data->ray[i].x_vertical = ((int)p->pos->x / TILE_SIZE) * TILE_SIZE + TILE_SIZE;
         x_step *= 1;
     }
 
     if (cos(data->ray[i].ray_angle) < 0) {
-        data->ray[i].x_vertical = ((int)p->pos->x / tile_size) * tile_size - EPSILON;
+        data->ray[i].x_vertical = ((int)p->pos->x / TILE_SIZE) * TILE_SIZE - EPSILON;
         x_step *= -1;
     }
 
