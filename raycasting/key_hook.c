@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 12:15:59 by naessgui          #+#    #+#             */
-/*   Updated: 2025/10/11 21:53:08 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/10/16 17:04:46 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,11 @@ void key_hook(mlx_key_data_t keydata, void *param)
 		else if (keydata.key == MLX_KEY_RIGHT)
 			player->rot_direction = 1;
 		else if( keydata.key == MLX_KEY_ESCAPE)
+		{
+			mlx_close_window(data->Mlx.mlx);
+			mlx_terminate(data->Mlx.mlx);
 			exit(0);
+		}
 	}
 	else if (keydata.action == MLX_RELEASE)
         reset_var(keydata , data);
@@ -91,6 +95,4 @@ void update(void *param)
 	if (has_wall_at(data ,data->player->pos->x + new_x, data->player->pos->y + new_y ))
 		return;
 	wall_collision(data ,new_x ,new_y);
-	// draw_map(data);
-    // draw_player(data->Mlx.img, data);
 }

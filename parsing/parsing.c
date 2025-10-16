@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 09:54:36 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/09/06 20:22:37 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/10/16 18:12:02 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,22 +74,22 @@ int	parse_map(int fd, t_map_list **map_lines)
 	return (1);
 }
 
-int	parse_file(char *file, t_game *cub)
+int	parse_file(char *file, t_data *data)
 {
 	int	fd;
 
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
 		return (ft_putstr_fd("Error: Cannot open file!\n", 2), 0);
-	if (!parse_config(fd, &cub->cfg))
+	if (!parse_config(fd, &data->cfg))
 	{
 		close(fd);
 		return (ft_putstr_fd("Error: Something wrong with configs!\n", 2), 0);
 	}
-	if (!parse_map(fd, &cub->map.list) || !validate_map(&cub->map))
+	if (!parse_map(fd, &data->map.list) || !validate_map(&data->map))
 	{
 		close(fd);
-		free_map_list(cub->map.list);
+		free_map_list(data->map.list);
 		return (ft_putstr_fd("Error: Invalid map!\n", 2), close(fd), 0);
 	}
 	close(fd);

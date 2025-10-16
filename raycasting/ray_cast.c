@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 17:17:52 by naessgui          #+#    #+#             */
-/*   Updated: 2025/10/14 16:53:01 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/10/16 17:03:52 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,7 +161,7 @@ void cast_rays(void *param)
     update(param);
     clear_image(data);
 	int num_rays = data->Mlx.win_w / WALL_STRIP_WIDTH;
-    data->ray = malloc(sizeof(t_ray) * num_rays);
+    data->ray = ft_calloc(num_rays, sizeof(t_ray));
 	double ray_angle = data->player->player_angle - ((FOV_ANGLE  * M_PI /180) / 2);
 	int i = 0;
 	while ( i < num_rays)
@@ -172,4 +172,5 @@ void cast_rays(void *param)
 		ray_angle += (FOV_ANGLE * M_PI / 180) / num_rays;
 		i++;
 	}
+    free(data->ray);
 }

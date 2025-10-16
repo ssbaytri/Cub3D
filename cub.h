@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 15:48:46 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/10/14 15:46:12 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/10/16 18:49:39 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ typedef struct s_map
 	char				**grid;
 	int					height;
 	int					width;
-	// int 				tile_size;
 	t_pos				player_pos;
 	char				player_dir;
 	t_dir				dir_count;
@@ -97,14 +96,6 @@ typedef struct s_config
 	t_marked			taken;
 }						t_config;
 
-typedef struct s_game
-{
-	void				*mlx;
-	void				*win;
-	t_config			cfg;
-	t_map				map;
-}	
-					t_game;
 typedef struct s_mlx
 {
     mlx_t *mlx;
@@ -124,12 +115,10 @@ typedef struct s_player
     float rot_speed;
     float player_angle;
 	// float ray_angle;
-	
 	// double y_horizontal;
 	// double x_horizontal;
 	// double y_vertical;
 	// double x_vertical;
-	
     int color;
     int radius;
 }   t_player;
@@ -198,6 +187,7 @@ double normalize_angle(double angle);
 void cast_single_ray(t_data *data, int stripid);
 
 void cast_rays(void *param);
+int	load_textures(t_data *data);
 
 /* ************************************************************************** */
 /*                            Argument Checking                               */
@@ -207,7 +197,7 @@ void					check_args(int ac, char *str);
 /* ************************************************************************** */
 /*                            File Parsing                                    */
 /* ************************************************************************** */
-int						parse_file(char *file, t_game *cub);
+int						parse_file(char *file, t_data *data);
 int						parse_config(int fd, t_config *cfg);
 int						parse_map(int fd, t_map_list **map_lines);
 

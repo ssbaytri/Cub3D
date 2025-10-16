@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 13:27:20 by naessgui          #+#    #+#             */
-/*   Updated: 2025/10/10 15:29:01 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/10/16 16:04:49 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ float	find_player_angle(t_data *data)
 
 void	init_player(t_data *data)
 {
-	data->player = malloc(sizeof(t_player));
-	data->player->pos = malloc(sizeof(t_pos));
+	data->player = ft_calloc(1, sizeof(t_player));
+	data->player->pos = ft_calloc(1, sizeof(t_pos));
 	data->player->pos->x = (data->map.player_pos.x + 0.5) * tile_size;
 	data->player->pos->y = (data->map.player_pos.y + 0.5) * tile_size;
 	data->player->walk_dir = 0;
