@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 17:17:52 by naessgui          #+#    #+#             */
-/*   Updated: 2025/10/17 00:26:12 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/10/17 23:21:23 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,5 +93,7 @@ void	cast_rays(void *param)
 		ray_angle += (FOV_ANGLE * M_PI / 180) / num_rays;
 		i++;
 	}
+	render_minimap(data);
+	render_minimap_player(data);
 	free(data->ray);
 }
