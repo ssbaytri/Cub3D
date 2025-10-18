@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 15:48:46 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/10/17 23:23:41 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/10/18 02:19:38 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,6 @@
 # define WALL_STRIP_WIDTH 1
 # define EPSILON 0.0001
 # define SENSITIVITY 0.001
-
-# define MINIMAP_SCALE 0.3
-# define MINIMAP_TILESIZE (TILE_SIZE * MINIMAP_SCALE)
-# define MINIMAP_PLAYER_RADIUS 6
 
 # define WINDOW_WIDTH 1920
 # define WINDOW_HEIGHT 1080
@@ -172,10 +168,11 @@ typedef struct s_data
 	t_dir				dir;
 	t_ray				*ray;
 	t_textures			textures;
+	double				minimap_factor;
 }						t_data;
 
 void render_minimap(t_data *data);
-void    render_minimap_player(t_data *data);
+void draw_minimap_frame(t_data *data);
 
 /* ************************************************************************** */
 /*                               INITIALIZATION                               */
