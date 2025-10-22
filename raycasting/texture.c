@@ -20,16 +20,16 @@ mlx_texture_t	*get_wall_texture(t_data *data, int stripid)
 	if (data->ray[stripid].was_vert_hit)
 	{
 		if (ray_angle > M_PI / 2 && ray_angle < 3 * M_PI / 2)
-			return (data->textures.west);
-		else
 			return (data->textures.east);
+		else
+			return (data->textures.west);
 	}
 	else
 	{
 		if (ray_angle > 0 && ray_angle < M_PI)
-			return (data->textures.south);
-		else
 			return (data->textures.north);
+		else
+			return (data->textures.south);
 	}
 }
 
