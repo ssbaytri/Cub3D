@@ -54,7 +54,10 @@ void	mouse_move(void *param)
 
 void	ss(void)
 {
-	system("leaks cub3D");
+	int	ret;
+
+	ret = system("leaks cub3D");
+	(void)ret;
 }
 
 int	main(int argc, char **argv)

@@ -14,11 +14,16 @@
 
 int	ft_putstr(char const *str)
 {
+	int	len;
+
 	if (!str)
 	{
-		write(1, "(null)", 6);
+		if (write(1, "(null)", 6) == -1)
+			return (-1);
 		return (6);
 	}
-	write(1, str, ft_strlen(str));
-	return (ft_strlen(str));
+	len = ft_strlen(str);
+	if (write(1, str, len) == -1)
+		return (-1);
+	return (len);
 }

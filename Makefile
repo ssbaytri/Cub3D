@@ -1,10 +1,10 @@
 CC = cc  
 flags = -Wall -Wextra -Werror -O3 #-fsanitize=address -g
 
-MLX_folder = mlx
-# MLX_folder = mlx_linux
-lib = $(MLX_folder)/build/libglfw3.a $(MLX_folder)/build/libmlx42.a -framework Cocoa -framework OpenGL -framework IOKit
-# lib = $(MLX_folder)/libmlx42_linux.a $(MLX_folder)/libglfw3_linux.a -lm -ldl -lX11 -lXrandr -lXi -lpthread -lGL
+# MLX_folder = mlx
+MLX_folder = mlx_linux
+# lib = $(MLX_folder)/build/libglfw3.a $(MLX_folder)/build/libmlx42.a -framework Cocoa -framework OpenGL -framework IOKit
+lib = $(MLX_folder)/libmlx42_linux.a $(MLX_folder)/libglfw3_linux.a -lm -ldl -lX11 -lXrandr -lXi -lpthread -lGL
 NAME = cub3D
 src = $(shell find . -name "*.c")
 obj = $(src:.c=.o)
