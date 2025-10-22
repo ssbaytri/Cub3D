@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 01:50:03 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/10/22 05:18:29 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/10/22 06:43:26 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,34 +64,27 @@ void draw_line(mlx_image_t *img, int x0, int y0, int x1, int y1, uint32_t color)
     }
 }
 
-/* --- draw the player dot and direction (centered) --- */
 void render_minimap_player(t_data *data)
 {
-    int center_x = MINIMAP_OFFSET_X + MINIMAP_SIZE / 2;
-    int center_y = MINIMAP_OFFSET_Y + MINIMAP_SIZE / 2;
-    int radius = 3;
+    int center_x;
+    int center_y;
+    int size;
+    int line_end_x;
+    int line_end_y;
 
-    /* small filled circle for player */
-    for (int dy = -radius; dy <= radius; dy++)
-    {
-        for (int dx = -radius; dx <= radius; dx++)
-        {
-            if (dx * dx + dy * dy <= radius * radius)
-            {
-                int px = center_x + dx;
-                int py = center_y + dy;
-                if (px >= MINIMAP_OFFSET_X && px < MINIMAP_OFFSET_X + MINIMAP_SIZE &&
-                    py >= MINIMAP_OFFSET_Y && py < MINIMAP_OFFSET_Y + MINIMAP_SIZE)
-                    mlx_put_pixel(data->mlx.img, px, py, 0xFF0000FF); /* red */
-            }
-        }
-    }
+    center_x = MINIMAP_OFFSET_X + MINIMAP_SIZE / 2;
+    center_y = MINIMAP_OFFSET_Y + MINIMAP_SIZE / 2;
+    size = 8;
 
-    /* direction line */
-    int line_length = 12; /* pixels on minimap */
-    int end_x = center_x + (int)(cosf(data->player->player_angle) * line_length);
-    int end_y = center_y + (int)(sinf(data->player->player_angle) * line_length);
-    draw_line(data->mlx.img, center_x, center_y, end_x, end_y, 0xFFFF00FF);
+    // Draw player square
+    draw_rect(data->mlx.img, center_x - size / 2, center_y - size / 2,
+              size, size, 0xFF0000FF);
+
+    // Draw direction line (simple version)
+    line_end_x = center_x + (int)(cos(data->player->player_angle) * 10);
+    line_end_y = center_y + (int)(sin(data->player->player_angle) * 10);
+    draw_line(data->mlx.img, center_x, center_y, line_end_x, line_end_y,
+              0xFFFF00FF);  // Yellow line
 }
 
 static void draw_minimap_frame(t_data *data)
