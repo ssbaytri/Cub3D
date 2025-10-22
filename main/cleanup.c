@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 22:45:07 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/10/22 03:33:20 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/10/22 05:16:09 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,9 @@ void	free_cfg(t_config *cfg)
 
 void	clean_textures(t_data *data)
 {
-	int i = 0;
+	int	i;
+
+	i = 0;
 	if (data->textures.north)
 		mlx_delete_texture(data->textures.north);
 	if (data->textures.south)

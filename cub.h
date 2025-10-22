@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 15:48:46 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/10/22 03:28:37 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/10/22 06:10:26 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,11 @@
 
 # define WINDOW_WIDTH 1920
 # define WINDOW_HEIGHT 1080
+
+# define MINIMAP_SIZE 200
+# define MINIMAP_OFFSET_X 0
+# define MINIMAP_OFFSET_Y 0
+# define MINIMAP_SCALE 3
 
 # define MLX_KEY_RIGHT 262
 # define MLX_KEY_LEFT 263
@@ -161,13 +166,34 @@ typedef struct s_render
 
 typedef struct s_animation
 {
-    mlx_texture_t *frames[6];
-    int            current_frame;
-    int            is_playing;
-    int            frame_delay;
-    int            frame_counter;
-	int				total_frames;
-} t_animation;
+	mlx_texture_t		*frames[6];
+	int					current_frame;
+	int					is_playing;
+	int					frame_delay;
+	int					frame_counter;
+	int					total_frames;
+}						t_animation;
+
+typedef struct s_pixel_coord
+{
+	int					x;
+	int					y;
+}						t_pixel_coord;
+
+typedef struct s_weapon_draw
+{
+	int					weapon_x;
+	int					weapon_y;
+	int					final_width;
+	int					final_height;
+	double				scale;
+}						t_weapon_draw;
+
+typedef struct s_point
+{
+	int					x;
+	int					y;
+}						t_point;
 
 typedef struct s_data
 {
@@ -181,19 +207,13 @@ typedef struct s_data
 	t_animation			weapon;
 }						t_data;
 
-void render_minimap(t_data *data);
-void draw_minimap_frame(t_data *data);
-void mouse_click_hook(mouse_key_t button, action_t action, modifier_key_t mods, void *param);
-void update_weapon_animation(t_data *data);
-void draw_weapon(t_data *data);
-bool load_weapon_animation(t_data *data);
-
 /* ************************************************************************** */
 /*                               INITIALIZATION                               */
 /* ************************************************************************** */
 void					window_size(t_data *data);
 void					init_player(t_data *data);
 int						load_textures(t_data *data);
+bool					load_weapon_animation(t_data *data);
 
 /* ************************************************************************** */
 /*                             INPUT & MOVEMENT                               */
@@ -205,6 +225,9 @@ void					wall_collision(t_data *data, double new_x,
 							double new_y);
 int						has_wall_at(t_data *data, float x, float y);
 void					mouse_move(void *param);
+void					mouse_click_hook(mouse_key_t button, action_t action,
+							modifier_key_t mods, void *param);
+void					update_weapon_animation(t_data *data);
 
 /* ************************************************************************** */
 /*                                 RAYCASTING                                 */
@@ -224,6 +247,8 @@ double					get_texture_offset(t_data *data, int stripid);
 uint32_t				get_texture_color(mlx_texture_t *texture, int x, int y);
 uint32_t				create_trgb(int *rgb);
 void					render_wall_strip(t_data *data, int stripid);
+void					render_minimap(t_data *data);
+void					draw_weapon(t_data *data);
 
 /* ************************************************************************** */
 /*                                   CLEANUP                                  */

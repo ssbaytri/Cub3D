@@ -6,16 +6,11 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 01:50:03 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/10/22 02:55:57 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/10/22 05:18:29 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub.h"
-
-#define MINIMAP_SIZE 200        // Square minimap
-#define MINIMAP_OFFSET_X 0     // Position from left
-#define MINIMAP_OFFSET_Y 0     // Position from top
-#define MINIMAP_SCALE 3      // Zoom level (lower = more zoomed in)
 
 void draw_rect(mlx_image_t *img, int x, int y, int width, int height, uint32_t color)
 {
@@ -97,6 +92,30 @@ void render_minimap_player(t_data *data)
     int end_x = center_x + (int)(cosf(data->player->player_angle) * line_length);
     int end_y = center_y + (int)(sinf(data->player->player_angle) * line_length);
     draw_line(data->mlx.img, center_x, center_y, end_x, end_y, 0xFFFF00FF);
+}
+
+static void draw_minimap_frame(t_data *data)
+{
+    int border_thickness = 28;  // Frame thickness
+
+    int x0 = MINIMAP_OFFSET_X;
+    int y0 = MINIMAP_OFFSET_Y;
+    int x1 = MINIMAP_OFFSET_X + MINIMAP_SIZE + border_thickness;
+    int y1 = MINIMAP_OFFSET_Y + MINIMAP_SIZE + border_thickness;
+
+    uint32_t border_color = 0x000000FF; // Black HUD frame
+
+    // TOP border (inside screen)
+    draw_rect(data->mlx.img, x0, y0, MINIMAP_SIZE, border_thickness, border_color);
+
+    // BOTTOM border
+    draw_rect(data->mlx.img, x0, y1 - border_thickness, MINIMAP_SIZE + border_thickness, border_thickness, border_color);
+
+    // LEFT border
+    draw_rect(data->mlx.img, x0, y0, border_thickness, MINIMAP_SIZE, border_color);
+
+    // RIGHT border
+    draw_rect(data->mlx.img, x1 - border_thickness, y0, border_thickness, MINIMAP_SIZE, border_color);
 }
 
 /* --- stable world->minimap transform and draw loop --- */
@@ -185,28 +204,7 @@ void render_minimap(t_data *data)
 
     /* Draw player on top (center) */
     render_minimap_player(data);
+    draw_minimap_frame(data);
 }
 
-void draw_minimap_frame(t_data *data)
-{
-    int border_thickness = 28;  // Frame thickness
 
-    int x0 = MINIMAP_OFFSET_X;
-    int y0 = MINIMAP_OFFSET_Y;
-    int x1 = MINIMAP_OFFSET_X + MINIMAP_SIZE + border_thickness;
-    int y1 = MINIMAP_OFFSET_Y + MINIMAP_SIZE + border_thickness;
-
-    uint32_t border_color = 0x000000FF; // Black HUD frame
-
-    // TOP border (inside screen)
-    draw_rect(data->mlx.img, x0, y0, MINIMAP_SIZE, border_thickness, border_color);
-
-    // BOTTOM border
-    draw_rect(data->mlx.img, x0, y1 - border_thickness, MINIMAP_SIZE + border_thickness, border_thickness, border_color);
-
-    // LEFT border
-    draw_rect(data->mlx.img, x0, y0, border_thickness, MINIMAP_SIZE, border_color);
-
-    // RIGHT border
-    draw_rect(data->mlx.img, x1 - border_thickness, y0, border_thickness, MINIMAP_SIZE, border_color);
-}
