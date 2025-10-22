@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 20:26:03 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/10/22 03:28:48 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/10/22 08:17:30 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,8 @@ int	main(int argc, char **argv)
 	atexit(ss);
 	data = ft_calloc(1, sizeof(t_data));
 	check_args(argc, argv[1]);
-	if (!parse_file(argv[1], data) || !load_textures(data) || !load_weapon_animation(data))
+	if (!parse_file(argv[1], data) || !load_textures(data)
+		|| !load_weapon_animation(data))
 		return (cleanup_error(data));
 	printf("Valid map and textures\n");
 	debug_game(data);

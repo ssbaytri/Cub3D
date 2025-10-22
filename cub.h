@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 15:48:46 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/10/22 06:10:26 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/10/22 08:16:58 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,6 +195,36 @@ typedef struct s_point
 	int					y;
 }						t_point;
 
+typedef struct s_minimap_bounds
+{
+	double				player_x;
+	double				player_y;
+	double				center_x;
+	double				center_y;
+	double				world_start_x;
+	double				world_start_y;
+	double				world_end_x;
+	double				world_end_y;
+}						t_minimap_bounds;
+
+typedef struct s_tile_bounds
+{
+	int					start_x;
+	int					start_y;
+	int					end_x;
+	int					end_y;
+}						t_tile_bounds;
+
+typedef struct s_tile_draw
+{
+	t_minimap_bounds	bounds;
+	int					tx;
+	int					ty;
+	int					screen_x;
+	int					screen_y;
+	int					tile_size;
+}						t_tile_draw;
+
 typedef struct s_data
 {
 	t_mlx				mlx;
@@ -249,6 +279,17 @@ uint32_t				create_trgb(int *rgb);
 void					render_wall_strip(t_data *data, int stripid);
 void					render_minimap(t_data *data);
 void					draw_weapon(t_data *data);
+void					draw_rect(mlx_image_t *img, t_point start, t_point size,
+							uint32_t color);
+void					draw_line(mlx_image_t *img, t_point p0, t_point p1,
+							uint32_t color);
+void					render_minimap_player(t_data *data);
+void					draw_minimap_frame(t_data *data);
+void					calculate_world_bounds(t_data *data,
+							t_minimap_bounds *bounds);
+void					calculate_tile_bounds(t_minimap_bounds *bounds,
+							t_tile_bounds *tiles);
+int						calculate_tile_pixel_size(void);
 
 /* ************************************************************************** */
 /*                                   CLEANUP                                  */
