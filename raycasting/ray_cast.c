@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 17:17:52 by naessgui          #+#    #+#             */
-/*   Updated: 2025/10/18 02:19:46 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/10/22 03:27:49 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,5 +95,7 @@ void	cast_rays(void *param)
 	}
 	render_minimap(data);
 	draw_minimap_frame(data);
+	update_weapon_animation(data);
+	draw_weapon(data);
 	free(data->ray);
 }

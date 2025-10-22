@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 15:48:46 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/10/18 02:19:38 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/10/22 03:28:37 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,6 +159,16 @@ typedef struct s_render
 	int					x;
 }						t_render;
 
+typedef struct s_animation
+{
+    mlx_texture_t *frames[6];
+    int            current_frame;
+    int            is_playing;
+    int            frame_delay;
+    int            frame_counter;
+	int				total_frames;
+} t_animation;
+
 typedef struct s_data
 {
 	t_mlx				mlx;
@@ -168,11 +178,15 @@ typedef struct s_data
 	t_dir				dir;
 	t_ray				*ray;
 	t_textures			textures;
-	double				minimap_factor;
+	t_animation			weapon;
 }						t_data;
 
 void render_minimap(t_data *data);
 void draw_minimap_frame(t_data *data);
+void mouse_click_hook(mouse_key_t button, action_t action, modifier_key_t mods, void *param);
+void update_weapon_animation(t_data *data);
+void draw_weapon(t_data *data);
+bool load_weapon_animation(t_data *data);
 
 /* ************************************************************************** */
 /*                               INITIALIZATION                               */

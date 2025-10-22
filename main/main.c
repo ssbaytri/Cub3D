@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 20:26:03 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/10/17 00:25:38 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/10/22 03:28:48 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	main(int argc, char **argv)
 	atexit(ss);
 	data = ft_calloc(1, sizeof(t_data));
 	check_args(argc, argv[1]);
-	if (!parse_file(argv[1], data) || !load_textures(data))
+	if (!parse_file(argv[1], data) || !load_textures(data) || !load_weapon_animation(data))
 		return (cleanup_error(data));
 	printf("Valid map and textures\n");
 	debug_game(data);
@@ -78,6 +78,7 @@ int	main(int argc, char **argv)
 	init_player(data);
 	mlx_set_cursor_mode(data->mlx.mlx, MLX_MOUSE_DISABLED);
 	mlx_key_hook(data->mlx.mlx, &key_hook, data);
+	mlx_mouse_hook(data->mlx.mlx, &mouse_click_hook, data);
 	mlx_loop_hook(data->mlx.mlx, cast_rays, data);
 	mlx_loop(data->mlx.mlx);
 	cleanup_success(data);

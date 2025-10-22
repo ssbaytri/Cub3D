@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 12:15:59 by naessgui          #+#    #+#             */
-/*   Updated: 2025/10/16 21:09:47 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/10/22 03:16:22 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,4 +85,21 @@ void	update(void *param)
 			+ new_y))
 		return ;
 	wall_collision(data, new_x, new_y);
+}
+
+void mouse_click_hook(mouse_key_t button, action_t action, modifier_key_t mods, void *param)
+{
+	t_data *data;
+	(void)mods;
+
+	data = (t_data *)param;
+	if (button == MLX_MOUSE_BUTTON_LEFT && action == MLX_PRESS)
+	{
+		if (!data->weapon.is_playing)
+		{
+			data->weapon.is_playing = 1;
+			data->weapon.current_frame = 0;
+            data->weapon.frame_counter = 0;
+		}
+	}
 }

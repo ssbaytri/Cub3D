@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 22:45:07 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/10/16 22:47:14 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/10/22 03:33:20 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	free_cfg(t_config *cfg)
 
 void	clean_textures(t_data *data)
 {
+	int i = 0;
 	if (data->textures.north)
 		mlx_delete_texture(data->textures.north);
 	if (data->textures.south)
@@ -30,6 +31,12 @@ void	clean_textures(t_data *data)
 		mlx_delete_texture(data->textures.east);
 	if (data->textures.west)
 		mlx_delete_texture(data->textures.west);
+	while (i < 6)
+	{
+		if (data->weapon.frames[i])
+			mlx_delete_texture(data->weapon.frames[i]);
+		i++;
+	}
 }
 
 int	cleanup_error(t_data *data)
