@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 18:23:04 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/10/22 05:45:34 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/10/23 04:19:12 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,17 @@ int	load_textures(t_data *data)
 	if (!data->textures.east)
 	{
 		printf("Error: Failed to load East texture: %s\n", data->cfg.ea_path);
+		return (0);
+	}
+	return (1);
+}
+
+int	load_door_texture(t_data *data)
+{
+	data->textures.door = mlx_load_png("./textures/7.png");
+	if (!data->textures.door)
+	{
+		printf("Error: Failed to load Door texture\n");
 		return (0);
 	}
 	return (1);

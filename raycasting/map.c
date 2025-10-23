@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 13:21:57 by naessgui          #+#    #+#             */
-/*   Updated: 2025/10/16 21:10:30 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/10/23 03:20:46 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int	has_wall_at(t_data *data, float x, float y)
 {
 	int	map_x;
 	int	map_y;
+	int	count;
 
 	map_x = (int)(x / TILE_SIZE);
 	map_y = (int)(y / TILE_SIZE);
@@ -30,6 +31,18 @@ int	has_wall_at(t_data *data, float x, float y)
 		return (1);
 	if (data->map.grid[map_y][map_x] == '1')
 		return (1);
+	if (data->map.grid[map_y][map_x] == 'D')
+	{
+		count = 0;
+		while (count < data->door_list.count)
+		{
+			if (data->door_list.doors[count].x == map_x
+				&& data->door_list.doors[count].y == map_y)
+				return (!data->door_list.doors[count].is_open);
+			count++;
+		}
+		return (1);
+	}
 	return (0);
 }
 

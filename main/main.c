@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 20:26:03 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/10/22 08:17:30 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/10/23 04:21:47 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,9 @@ int	main(int argc, char **argv)
 	data = ft_calloc(1, sizeof(t_data));
 	check_args(argc, argv[1]);
 	if (!parse_file(argv[1], data) || !load_textures(data)
-		|| !load_weapon_animation(data))
+		|| !load_weapon_animation(data) || !load_door_texture(data))
 		return (cleanup_error(data));
-	printf("Valid map and textures\n");
+	find_all_doors(data);
 	debug_game(data);
 	window_size(data);
 	data->mlx.mlx = mlx_init(data->mlx.win_w, data->mlx.win_h, "Cub3D", false);

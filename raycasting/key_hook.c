@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 12:15:59 by naessgui          #+#    #+#             */
-/*   Updated: 2025/10/22 05:15:40 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/10/23 03:36:34 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ void	mouse_click_hook(mouse_key_t button, action_t action,
 		modifier_key_t mods, void *param)
 {
 	t_data	*data;
+	t_door	*door;
 
 	(void)mods;
 	data = (t_data *)param;
@@ -102,5 +103,11 @@ void	mouse_click_hook(mouse_key_t button, action_t action,
 			data->weapon.current_frame = 0;
 			data->weapon.frame_counter = 0;
 		}
+	}
+	if (button == MLX_MOUSE_BUTTON_RIGHT && action == MLX_PRESS)
+	{
+		door = find_nearest_door(data);
+		if (door)
+			door->is_open = !door->is_open;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 21:39:59 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/10/16 22:02:12 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/10/23 04:22:45 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,15 @@
 mlx_texture_t	*get_wall_texture(t_data *data, int stripid)
 {
 	double	ray_angle;
+	int		map_x;
+	int		map_y;
 
 	ray_angle = data->ray[stripid].ray_angle;
+	map_x = (int)(data->ray[stripid].wall_hit_x / TILE_SIZE);
+	map_y = (int)(data->ray[stripid].wall_hit_y / TILE_SIZE);
+	if (map_y >= 0 && map_y < data->map.height && map_x >= 0
+		&& map_x < data->map.width && data->map.grid[map_y][map_x] == 'D')
+		return (data->textures.door);
 	if (data->ray[stripid].was_vert_hit)
 	{
 		if (ray_angle > M_PI / 2 && ray_angle < 3 * M_PI / 2)

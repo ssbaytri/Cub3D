@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 22:45:07 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/10/22 05:16:09 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/10/23 04:20:51 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ void	clean_textures(t_data *data)
 		mlx_delete_texture(data->textures.east);
 	if (data->textures.west)
 		mlx_delete_texture(data->textures.west);
+	if (data->textures.door)
+		mlx_delete_texture(data->textures.door);
 	while (i < 6)
 	{
 		if (data->weapon.frames[i])

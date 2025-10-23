@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 15:48:46 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/10/22 08:16:58 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/10/23 04:19:39 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,6 +148,7 @@ typedef struct s_textures
 	mlx_texture_t		*south;
 	mlx_texture_t		*east;
 	mlx_texture_t		*west;
+	mlx_texture_t		*door;
 }						t_textures;
 
 typedef struct s_render
@@ -225,6 +226,19 @@ typedef struct s_tile_draw
 	int					tile_size;
 }						t_tile_draw;
 
+typedef struct s_door
+{
+	int					x;
+	int					y;
+	int					is_open;
+}						t_door;
+
+typedef struct s_door_list
+{
+	t_door				*doors;
+	int					count;
+}						t_door_list;
+
 typedef struct s_data
 {
 	t_mlx				mlx;
@@ -235,7 +249,11 @@ typedef struct s_data
 	t_ray				*ray;
 	t_textures			textures;
 	t_animation			weapon;
+	t_door_list			door_list;
 }						t_data;
+
+t_door					*find_nearest_door(t_data *data);
+void					find_all_doors(t_data *data);
 
 /* ************************************************************************** */
 /*                               INITIALIZATION                               */
@@ -244,6 +262,7 @@ void					window_size(t_data *data);
 void					init_player(t_data *data);
 int						load_textures(t_data *data);
 bool					load_weapon_animation(t_data *data);
+int						load_door_texture(t_data *data);
 
 /* ************************************************************************** */
 /*                             INPUT & MOVEMENT                               */

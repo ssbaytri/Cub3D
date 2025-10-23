@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 14:55:25 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/10/16 19:21:17 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/10/23 04:14:29 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ int	is_map_line_valid(char *line)
 	while (line[i])
 	{
 		if (line[i] != '0' && line[i] != '1' && line[i] != 'N' && line[i] != 'S'
-			&& line[i] != 'E' && line[i] != 'W' && line[i] != ' ')
+			&& line[i] != 'E' && line[i] != 'W' && line[i] != ' '
+			&& line[i] != 'D')
 			return (0);
 		i++;
 	}

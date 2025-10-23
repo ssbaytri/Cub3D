@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 05:45:50 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/10/22 06:11:38 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/10/23 02:49:34 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ bool	load_weapon_animation(t_data *data)
 	}
 	data->weapon.current_frame = 0;
 	data->weapon.is_playing = 0;
-	data->weapon.frame_delay = 4;
+	data->weapon.frame_delay = 6;
 	data->weapon.frame_counter = 0;
 	data->weapon.total_frames = 6;
 	return (true);
