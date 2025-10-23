@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 15:48:46 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/10/23 05:03:57 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/10/23 05:13:34 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -260,7 +260,6 @@ void					init_player(t_data *data);
 int						load_textures(t_data *data);
 bool					load_weapon_animation(t_data *data);
 int						load_door_texture(t_data *data);
-t_door					*find_nearest_door(t_data *data);
 void					find_all_doors(t_data *data);
 
 /* ************************************************************************** */
@@ -276,6 +275,7 @@ void					mouse_move(void *param);
 void					mouse_click_hook(mouse_key_t button, action_t action,
 							modifier_key_t mods, void *param);
 void					update_weapon_animation(t_data *data);
+t_door					*find_nearest_door(t_data *data);
 
 /* ************************************************************************** */
 /*                                 RAYCASTING                                 */
@@ -308,6 +308,8 @@ void					calculate_world_bounds(t_data *data,
 void					calculate_tile_bounds(t_minimap_bounds *bounds,
 							t_tile_bounds *tiles);
 int						calculate_tile_pixel_size(void);
+int						find_door_at(t_data *data, int map_x, int map_y);
+uint32_t				get_door_color(t_data *data, int door_index);
 
 /* ************************************************************************** */
 /*                                   CLEANUP                                  */

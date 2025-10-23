@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 08:14:51 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/10/23 01:52:31 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/10/23 05:13:51 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,23 @@ static uint32_t	get_tile_color(t_data *data, double tile_x, double tile_y)
 {
 	double	check_x;
 	double	check_y;
+	int		map_x;
+	int		map_y;
+	int		door_idx;
 
 	check_x = tile_x + 0.5 * TILE_SIZE;
 	check_y = tile_y + 0.5 * TILE_SIZE;
-	if (check_x >= 0 && check_y >= 0 && has_wall_at(data, (float)check_x,
-			(float)check_y))
+	map_x = (int)(check_x / TILE_SIZE);
+	map_y = (int)(check_y / TILE_SIZE);
+	if (map_y >= 0 && map_y < data->map.height && map_x >= 0
+		&& map_x < data->map.width && data->map.grid[map_y][map_x] == 'D')
+	{
+		door_idx = find_door_at(data, map_x, map_y);
+		if (door_idx >= 0)
+			return (get_door_color(data, door_idx));
+	}
+	if (check_x >= 0 && check_y >= 0
+		&& has_wall_at(data, (float)check_x, (float)check_y))
 		return (0x808080FF);
 	return (0xD3D3D3FF);
 }
