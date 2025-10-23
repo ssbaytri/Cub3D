@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 03:10:40 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/10/23 04:39:07 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/10/23 05:01:47 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,21 +63,29 @@ void	find_all_doors(t_data *data)
 	}
 }
 
-t_door	*find_nearest_door(t_data *data)
+static t_point	calculate_check_position(t_data *data)
 {
 	double	check_dist;
-	double	check_x;
-	double	check_y;
+	t_pos	check_pos;
+	t_point	map_pos;
+
+	check_dist = TILE_SIZE * 1.5;
+	check_pos.x = data->player->pos->x + cos(data->player->player_angle)
+		* check_dist;
+	check_pos.y = data->player->pos->y + sin(data->player->player_angle)
+		* check_dist;
+	map_pos.x = (int)(check_pos.x / TILE_SIZE);
+	map_pos.y = (int)(check_pos.y / TILE_SIZE);
+	return (map_pos);
+}
+
+t_door	*find_nearest_door(t_data *data)
+{
 	t_point	map_pos;
 	int		i;
 
-	check_dist = TILE_SIZE * 1.5;
-	check_x = data->player->pos->x + cos(data->player->player_angle)
-		* check_dist;
-	check_y = data->player->pos->y + sin(data->player->player_angle)
-		* check_dist;
-	map_pos.x = (int)(check_x / TILE_SIZE);
-	map_pos.y = (int)(check_y / TILE_SIZE);
+	i = 0;
+	map_pos = calculate_check_position(data);
 	if (map_pos.y >= 0 && map_pos.y < data->map.height && map_pos.x >= 0
 		&& map_pos.x < data->map.width
 		&& data->map.grid[map_pos.y][map_pos.x] == 'D')

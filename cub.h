@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 15:48:46 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/10/23 04:19:39 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/10/23 05:03:57 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -252,9 +252,6 @@ typedef struct s_data
 	t_door_list			door_list;
 }						t_data;
 
-t_door					*find_nearest_door(t_data *data);
-void					find_all_doors(t_data *data);
-
 /* ************************************************************************** */
 /*                               INITIALIZATION                               */
 /* ************************************************************************** */
@@ -263,6 +260,8 @@ void					init_player(t_data *data);
 int						load_textures(t_data *data);
 bool					load_weapon_animation(t_data *data);
 int						load_door_texture(t_data *data);
+t_door					*find_nearest_door(t_data *data);
+void					find_all_doors(t_data *data);
 
 /* ************************************************************************** */
 /*                             INPUT & MOVEMENT                               */
