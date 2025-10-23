@@ -6,7 +6,7 @@
 /*   By: ssbaytri <ssbaytri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 22:45:07 by ssbaytri          #+#    #+#             */
-/*   Updated: 2025/10/23 04:20:51 by ssbaytri         ###   ########.fr       */
+/*   Updated: 2025/10/23 05:16:51 by ssbaytri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,6 @@ void	cleanup_success(t_data *data)
 	if (data->player)
 		free(data->player);
 	clean_textures(data);
+	free(data->door_list.doors);
 	free(data);
 }
