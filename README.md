@@ -10,7 +10,7 @@
 
 [Features](#-features) • [Installation](#️-installation) • [Usage](#-usage) • [Controls](#-controls) • [Technical Details](#-technical-details)
 
-![cub3D Demo](https://via.placeholder.com/800x400/1a1a1a/ffffff?text=cub3D+Game+Screenshot)
+![cub3D Demo](https://drive.google.com/uc?id=1dtF-TWjfqwyDpWzzKrthFqiUobsOEMt2)
 
 </div>
 
