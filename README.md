@@ -312,8 +312,8 @@ This project is part of the 42 school curriculum. All rights reserved.
 ## 👨‍💻 Author
 
 **ssbaytri**
-- 42 Intra: `ssbaytri`
-- GitHub: [@ssbaytri](https://github.com/ssbaytri)
+- 42 Intra: `ssbaytri` `naessgui`
+- GitHub: [@ssbaytri](https://github.com/ssbaytri) [@nada-eghr](https://github.com/nada-eghr)
 
 ---
 
